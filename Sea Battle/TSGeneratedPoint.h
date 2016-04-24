@@ -23,6 +23,6 @@
 
 @property (assign, nonatomic) id <TSGeneratedPointDelegate> delegate;
 
-- (void)receivingPoint:(CGPoint)point;
+- (void)receivingPoint:(CGPoint)point view:(UIView *) currentView tag:(NSInteger)tag;
 
 @end

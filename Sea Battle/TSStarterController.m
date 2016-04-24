@@ -56,7 +56,7 @@ BOOL positionButtonStart = NO;
     CGPoint point = _currentView.frame.origin;
     _generationPoint = [[TSGeneratedPoint alloc] init];
     _generationPoint.delegate = self;
-    [_generationPoint receivingPoint:point];
+    [_generationPoint receivingPoint:point view:_currentView tag:_currentView.tag];
 }
 
 #pragma mark - TSGeneratedPointDelegate

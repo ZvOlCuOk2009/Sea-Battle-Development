@@ -282,27 +282,27 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="3" contentMode="scaleToFill" id="CLd-0t-59t">
+                            <view alpha="0.75" tag="2" contentMode="scaleToFill" id="CLd-0t-59t">
                                 <rect key="frame" x="309" y="145" width="66" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="2" contentMode="scaleToFill" id="h2S-ea-nuz">
+                            <view alpha="0.75" tag="3" contentMode="scaleToFill" id="h2S-ea-nuz">
                                 <rect key="frame" x="309" y="188" width="66" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="10" contentMode="scaleToFill" id="WBG-kQ-YQN">
+                            <view alpha="0.75" tag="8" contentMode="scaleToFill" id="WBG-kQ-YQN">
                                 <rect key="frame" x="463" y="145" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="6" contentMode="scaleToFill" id="edY-ju-mje">
+                            <view alpha="0.75" tag="5" contentMode="scaleToFill" id="edY-ju-mje">
                                 <rect key="frame" x="419" y="232" width="44" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="5" contentMode="scaleToFill" id="d4B-25-xZj">
+                            <view alpha="0.75" tag="6" contentMode="scaleToFill" id="d4B-25-xZj">
                                 <rect key="frame" x="419" y="188" width="44" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -312,17 +312,17 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="7" contentMode="scaleToFill" id="VOb-hD-tqM">
+                            <view alpha="0.75" tag="10" contentMode="scaleToFill" id="VOb-hD-tqM">
                                 <rect key="frame" x="463" y="101" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="8" contentMode="scaleToFill" id="NiB-W4-10I">
+                            <view alpha="0.75" tag="9" contentMode="scaleToFill" id="NiB-W4-10I">
                                 <rect key="frame" x="419" y="101" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="9" contentMode="scaleToFill" id="YAN-Hx-Yb8">
+                            <view alpha="0.75" tag="7" contentMode="scaleToFill" id="YAN-Hx-Yb8">
                                 <rect key="frame" x="419" y="145" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -416,7 +416,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0B-Xz-EmV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="268" y="713"/>
+            <point key="canvasLocation" x="268" y="708"/>
         </scene>
     </scenes>
     <resources>
@@ -425,6 +425,6 @@
         <image name="start" width="568" height="320"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GTp-T0-7ch"/>
+        <segue reference="tsH-cp-1M1"/>
     </inferredMetricsTieBreakers>
 </document>
