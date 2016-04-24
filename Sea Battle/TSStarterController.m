@@ -12,6 +12,7 @@
 
 static NSString *backgroundSheet = @"sheet";
 static BOOL positon = NO;
+static BOOL loginID = YES;
 BOOL positionButtonStart = NO;
 
 @interface TSStarterController () <TSGeneratedPointDelegate>
@@ -34,6 +35,17 @@ BOOL positionButtonStart = NO;
     tapGesture.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGesture];
     [tapGesture release];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (loginID == YES) {
+        [self savePositionShips];
+        loginID = NO;
+    } else {
+        [self loadPositionShips];
+    }
 }
 
 #pragma mark - Touches
@@ -109,11 +121,32 @@ BOOL positionButtonStart = NO;
     transition.subtype = kCATransitionFromRight;
     [self.view.window.layer addAnimation:transition forKey:nil];
     [self presentViewController:controller animated:NO completion:nil];
+    controller.collectionShip = self.collectionShip;
     [self savePositionShips];
     positionButtonStart = YES;
 }
 
 #pragma mark - Save of locations of ships
+
+- (void)loadPositionShips
+{
+    for (int i = 0; i < [self.collectionShip count]; ++i) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
+        NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
+        NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
+        NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
+
+        CGFloat x = [[userDefaults objectForKey:keyX] floatValue];
+        CGFloat y = [[userDefaults objectForKey:keyY] floatValue];
+        CGFloat width = [[userDefaults objectForKey:keyWidth] floatValue];
+        CGFloat height = [[userDefaults objectForKey:keyHeight] floatValue];
+
+        CGRect frame = CGRectMake(x, y, width, height);
+        UIView *view = [self.collectionShip objectAtIndex:i];
+        view.frame = frame;
+    }
+}
 
 - (void)savePositionShips
 {
@@ -124,7 +157,7 @@ BOOL positionButtonStart = NO;
         NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
         NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
         NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
-        
+
         [userDefaults setFloat:ship.frame.origin.x forKey:keyX];
         [userDefaults setFloat:ship.frame.origin.y forKey:keyY];
         [userDefaults setFloat:ship.frame.size.width forKey:keyWidth];
@@ -132,6 +165,7 @@ BOOL positionButtonStart = NO;
         [userDefaults synchronize];
     }
 }
+
 
 - (void)dealloc {
 //    [_collectionShip release];

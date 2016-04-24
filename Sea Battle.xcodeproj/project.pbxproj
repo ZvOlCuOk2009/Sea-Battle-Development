@@ -24,6 +24,7 @@
 		FD9F23261CC8DE8C00EE0243 /* TSStarterController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9F23251CC8DE8C00EE0243 /* TSStarterController.m */; };
 		FD9F23291CC9330F00EE0243 /* TSHeadbandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9F23281CC9330F00EE0243 /* TSHeadbandController.m */; };
 		FD9F23331CC9673E00EE0243 /* TSAlerts.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9F23321CC9673E00EE0243 /* TSAlerts.m */; };
+		FDBFFCA61CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBFFCA51CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m */; };
 		FDD2B74A1CC51B8F00E7A0A6 /* TSCalculationOfResponseShots.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD2B7491CC51B8F00E7A0A6 /* TSCalculationOfResponseShots.m */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,8 @@
 		FD9F23281CC9330F00EE0243 /* TSHeadbandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSHeadbandController.m; sourceTree = "<group>"; };
 		FD9F23311CC9673E00EE0243 /* TSAlerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlerts.h; sourceTree = "<group>"; };
 		FD9F23321CC9673E00EE0243 /* TSAlerts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlerts.m; sourceTree = "<group>"; };
+		FDBFFCA41CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAutomaticLocationTheFleet.h; sourceTree = "<group>"; };
+		FDBFFCA51CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAutomaticLocationTheFleet.m; sourceTree = "<group>"; };
 		FDD2B7481CC51B8F00E7A0A6 /* TSCalculationOfResponseShots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCalculationOfResponseShots.h; sourceTree = "<group>"; };
 		FDD2B7491CC51B8F00E7A0A6 /* TSCalculationOfResponseShots.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCalculationOfResponseShots.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +200,8 @@
 				FDD2B7491CC51B8F00E7A0A6 /* TSCalculationOfResponseShots.m */,
 				FD5854D01CC839850051CD58 /* TSGeneratedPoint.h */,
 				FD5854D11CC839850051CD58 /* TSGeneratedPoint.m */,
+				FDBFFCA41CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.h */,
+				FDBFFCA51CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -371,6 +376,7 @@
 				FD878CF31CC26BC200AF3C99 /* TSGameController.m in Sources */,
 				FD9F23291CC9330F00EE0243 /* TSHeadbandController.m in Sources */,
 				FD878CC31CC26B8700AF3C99 /* AppDelegate.m in Sources */,
+				FDBFFCA61CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m in Sources */,
 				FD878CC01CC26B8700AF3C99 /* main.m in Sources */,
 				FD5854D21CC839850051CD58 /* TSGeneratedPoint.m in Sources */,
 				FD9F23331CC9673E00EE0243 /* TSAlerts.m in Sources */,

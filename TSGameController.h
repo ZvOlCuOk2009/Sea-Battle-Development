@@ -11,4 +11,6 @@
 
 @interface TSGameController : UIViewController
 
+@property (retain, nonatomic) NSArray *collectionShip;
+
 @end

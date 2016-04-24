@@ -33,8 +33,8 @@ static NSString *soundOff = @"multimedia-2";
         [_offSoundButton setImage:imgOff forState:UIControlStateNormal];
     } else {
         soundButton = YES;
-        UIImage *imgOff = [UIImage imageNamed:soundOn];
-        [_offSoundButton setImage:imgOff forState:UIControlStateNormal];
+        UIImage *imgOn = [UIImage imageNamed:soundOn];
+        [_offSoundButton setImage:imgOn forState:UIControlStateNormal];
     }
 }
 

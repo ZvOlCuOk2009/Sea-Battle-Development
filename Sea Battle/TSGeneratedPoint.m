@@ -27,7 +27,7 @@ static NSInteger correctionValue = 12;
     }
 }
 
-//  Костыльный вариант, дублирование кода, но я не смог его сделать лучше
+//  Костыльный вариант, дублирование кода, но я не смог додуматься сделать лучше
 
 #pragma mark - Return to the old position
 
@@ -43,6 +43,7 @@ static NSInteger correctionValue = 12;
     CGRect frame8 = CGRectMake(463, 145, 22, 22);
     CGRect frame9 = CGRectMake(419, 101, 22, 22);
     CGRect frame10 = CGRectMake(463, 101, 22, 22);
+    CGRect mainFrame = CGRectMake(0, 0, 568, 320);
     switch (tag) {
         case 1:
             return frame1;
@@ -77,7 +78,7 @@ static NSInteger correctionValue = 12;
         default:
             break;
     }
-    return frame1;
+    return mainFrame;
 }
 
 @end

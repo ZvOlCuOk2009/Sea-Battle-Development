@@ -24,6 +24,7 @@ static CGFloat blueColor = 249.0 / 255.0;
     view.backgroundColor = color;
     view.alpha = 0.7f;
     view.userInteractionEnabled = NO;
+    [parentVIew bringSubviewToFront:view];
     [parentVIew addSubview:view];
     [view autorelease];
 }
@@ -53,7 +54,7 @@ static CGFloat blueColor = 249.0 / 255.0;
                          alertView.frame = newRect;
                          alertView.alpha = 0.85f;
                      }];
-//    [label autorelease];
+    [label autorelease];
     return alertView;
 }
 

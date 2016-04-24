@@ -31,8 +31,10 @@ static BOOL identifier = YES;
         if (verification == YES) {
 //            NSLog(@"RECT USER x = %ld, y = %ld", (long)[self calculationValuePositionX:transmittedPoint],
 //                                                     (long)[self calculationValuePositionY:transmittedPoint]);
-            [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
-            identifier = NO;
+            if (transmittedPoint.x <= 550 && transmittedPoint.x >= 330 && transmittedPoint.y <= 296 && transmittedPoint.y >= 79) {
+                [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
+                identifier = NO;
+            }
         }
     }
     if (identifier == YES) {

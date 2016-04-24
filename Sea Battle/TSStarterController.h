@@ -10,7 +10,6 @@
 
 extern BOOL positionButtonStart;
 
-
 @interface TSStarterController : UIViewController
 
 @end

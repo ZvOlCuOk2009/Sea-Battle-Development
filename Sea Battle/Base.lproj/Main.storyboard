@@ -85,7 +85,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hbg-hl-imY">
-                                <rect key="frame" x="90" y="12" width="107" height="46"/>
+                                <rect key="frame" x="40" y="12" width="107" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="46"/>
@@ -96,8 +96,20 @@
                                     <action selector="backAtion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oJQ-NR-QC0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jyo-qG-GZ2">
+                                <rect key="frame" x="416" y="12" width="107" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="46"/>
+                                <state key="normal" title="Авто">
+                                    <color key="titleColor" red="0.4431372549" green="0.16862745100000001" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="avtoAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="beW-Vv-x4I"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Uf9-py-ybR">
-                                <rect key="frame" x="350" y="12" width="152" height="37"/>
+                                <rect key="frame" x="208" y="12" width="152" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="46"/>
@@ -108,46 +120,6 @@
                                     <segue destination="KG6-Mw-EW3" kind="modal" id="GTp-T0-7ch"/>
                                 </connections>
                             </button>
-                            <view alpha="0.75" tag="1" contentMode="scaleToFill" id="IPl-2r-QXh">
-                                <rect key="frame" x="109" y="189" width="88" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="3" contentMode="scaleToFill" id="uha-bx-P9K">
-                                <rect key="frame" x="66" y="145" width="66" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="2" contentMode="scaleToFill" id="Ybz-V1-Dx5">
-                                <rect key="frame" x="44" y="101" width="66" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="10" contentMode="scaleToFill" id="Rjc-XJ-WzM">
-                                <rect key="frame" x="198" y="233" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="6" contentMode="scaleToFill" id="8EX-WN-pel">
-                                <rect key="frame" x="132" y="254" width="44" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="5" contentMode="scaleToFill" id="5Zv-yg-GUT">
-                                <rect key="frame" x="176" y="123" width="44" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="4" contentMode="scaleToFill" id="gxw-AJ-vjw">
-                                <rect key="frame" x="44" y="254" width="44" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="7" contentMode="scaleToFill" id="yXq-hS-ICe">
-                                <rect key="frame" x="22" y="145" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <view alpha="0.75" tag="3" contentMode="scaleToFill" id="xCJ-0K-cAT">
                                 <rect key="frame" x="330" y="79" width="66" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -188,20 +160,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.75" tag="8" contentMode="scaleToFill" id="TgX-Dm-HQ9">
-                                <rect key="frame" x="132" y="101" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <view alpha="0.75" contentMode="scaleToFill" id="BPY-s9-Hfy">
                                 <rect key="frame" x="418" y="101" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view alpha="0.75" tag="9" contentMode="scaleToFill" id="0bh-Ag-djJ">
-                                <rect key="frame" x="44" y="210" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.42745098040000001" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view alpha="0.75" contentMode="scaleToFill" id="di8-XN-Jvf">
                                 <rect key="frame" x="352" y="254" width="44" height="22"/>
@@ -214,16 +176,6 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outletCollection property="collectionShip" destination="IPl-2r-QXh" id="bAC-KL-iM7"/>
-                        <outletCollection property="collectionShip" destination="uha-bx-P9K" id="D2U-VG-bfj"/>
-                        <outletCollection property="collectionShip" destination="Ybz-V1-Dx5" id="ehD-Ys-d29"/>
-                        <outletCollection property="collectionShip" destination="Rjc-XJ-WzM" id="B4C-cU-cWw"/>
-                        <outletCollection property="collectionShip" destination="TgX-Dm-HQ9" id="JKe-dF-I0G"/>
-                        <outletCollection property="collectionShip" destination="8EX-WN-pel" id="eSm-cE-599"/>
-                        <outletCollection property="collectionShip" destination="5Zv-yg-GUT" id="OYB-by-Ob2"/>
-                        <outletCollection property="collectionShip" destination="gxw-AJ-vjw" id="Ucr-dl-Mg1"/>
-                        <outletCollection property="collectionShip" destination="0bh-Ag-djJ" id="Fa3-aE-T6f"/>
-                        <outletCollection property="collectionShip" destination="yXq-hS-ICe" id="YIO-wI-voX"/>
                         <outletCollection property="collectionEnemyShip" destination="xCJ-0K-cAT" id="OD8-yx-NGl"/>
                         <outletCollection property="collectionEnemyShip" destination="W4x-I5-le2" id="4DQ-R3-DA4"/>
                         <outletCollection property="collectionEnemyShip" destination="BPY-s9-Hfy" id="K4H-Iy-yco"/>
@@ -425,6 +377,6 @@
         <image name="start" width="568" height="320"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tsH-cp-1M1"/>
+        <segue reference="GTp-T0-7ch"/>
     </inferredMetricsTieBreakers>
 </document>

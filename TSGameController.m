@@ -14,15 +14,16 @@
 #import "TSStarterController.h"
 #import "TSAlerts.h"
 #import "TSSettingsController.h"
+#import "TSAutomaticLocationTheFleet.h"
 
 static BOOL userInteractionAlert = NO;
 static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
 static NSString *buttonImgNo = @"button no";
 
-@interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate>
+@interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
 
-@property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionShip;
+//@property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionShip;
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionEnemyShip;
 @property (retain, nonatomic) UIView *hitView;
 @property (retain, nonatomic) UIView *alertView;
@@ -41,33 +42,19 @@ static NSString *buttonImgNo = @"button no";
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    [self loadData];
-}
-
-#pragma mark - Loading locations of ships
-
-- (void)loadData
-{
-    for (int i = 0; i < [self.collectionShip count]; ++i) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
-        NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
-        NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
-        NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
+    [super viewWillAppear:animated];
+    for (int i = 0; i < self.collectionShip.count; i++) {
         
-        CGFloat x = [[userDefaults objectForKey:keyX] floatValue];
-        CGFloat y = [[userDefaults objectForKey:keyY] floatValue];
-        CGFloat width = [[userDefaults objectForKey:keyWidth] floatValue];
-        CGFloat height = [[userDefaults objectForKey:keyHeight] floatValue];
-        
-        CGRect frame = CGRectMake(x, y, width, height);
-        UIView *view = [self.collectionShip objectAtIndex:i];
-        view.frame = frame;
+        UIView * currentShipView = [self.collectionShip objectAtIndex:i];
+        NSLog(@"currentShipView %d - x = %1.1f, y = %1.1f, width = %1.1f, height = %1.1f", i, currentShipView.frame.origin.x, currentShipView.frame.origin.y, currentShipView.frame.size.width, currentShipView.frame.size.height);
+        [self.view addSubview:currentShipView];
     }
+//    [self loadData];
 }
+
+#pragma mark -
 
 - (void)transitionLocation:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height
 {
@@ -168,6 +155,21 @@ static NSString *buttonImgNo = @"button no";
         [_alertView addSubview:buttonYes];
         [_alertView addSubview:buttonNo];
         userInteractionAlert = YES;
+    }
+}
+
+- (IBAction)avtoAction:(id)sender {
+    
+    TSAutomaticLocationTheFleet *autiomatic = [[TSAutomaticLocationTheFleet alloc] init];
+    autiomatic.delegate = self;
+    [autiomatic requestCollectionShips:self.collectionEnemyShip];
+}
+
+- (void)translationLocationFleet:(NSArray *)ships
+{
+    for (UIView *ship in ships) {
+        ship.backgroundColor = [UIColor greenColor];
+        [self.view addSubview:ship];
     }
 }
 
