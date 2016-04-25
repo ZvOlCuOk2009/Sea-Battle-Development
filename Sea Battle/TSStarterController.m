@@ -11,6 +11,7 @@
 #import "TSGeneratedPoint.h"
 
 static NSString *backgroundSheet = @"sheet";
+static NSString *kKeyPositionSips = @"positionSips";
 static BOOL positon = NO;
 static BOOL loginID = YES;
 BOOL positionButtonStart = NO;
@@ -41,17 +42,25 @@ BOOL positionButtonStart = NO;
 {
     [super viewWillAppear:animated];
     if (loginID == YES) {
-        [self savePositionShips];
+       // [self savePositionShips];
         loginID = NO;
     } else {
         [self loadPositionShips];
+        loginID = YES;
     }
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
 }
 
 #pragma mark - Touches
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
+    [self savePositionShips];
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     _currentView = [self.view hitTest:locationPoint withEvent:event];
@@ -122,34 +131,14 @@ BOOL positionButtonStart = NO;
     [self.view.window.layer addAnimation:transition forKey:nil];
     [self presentViewController:controller animated:NO completion:nil];
     controller.collectionShip = self.collectionShip;
-    [self savePositionShips];
     positionButtonStart = YES;
 }
 
 #pragma mark - Save of locations of ships
 
-- (void)loadPositionShips
-{
-    for (int i = 0; i < [self.collectionShip count]; ++i) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
-        NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
-        NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
-        NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
-
-        CGFloat x = [[userDefaults objectForKey:keyX] floatValue];
-        CGFloat y = [[userDefaults objectForKey:keyY] floatValue];
-        CGFloat width = [[userDefaults objectForKey:keyWidth] floatValue];
-        CGFloat height = [[userDefaults objectForKey:keyHeight] floatValue];
-
-        CGRect frame = CGRectMake(x, y, width, height);
-        UIView *view = [self.collectionShip objectAtIndex:i];
-        view.frame = frame;
-    }
-}
-
 - (void)savePositionShips
 {
+    /*
     for (int i = 0; i < [self.collectionShip count]; ++i) {
         UIView *ship = [self.collectionShip objectAtIndex:i];
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -163,6 +152,47 @@ BOOL positionButtonStart = NO;
         [userDefaults setFloat:ship.frame.size.width forKey:keyWidth];
         [userDefaults setFloat:ship.frame.size.height forKey:keyHeight];
         [userDefaults synchronize];
+    }
+     */
+    
+    NSMutableArray *archivePositionShips = [NSMutableArray arrayWithCapacity:self.collectionShip.count];
+    for (UIView * ship in self.collectionShip) {
+        NSData * encodedObjectShip = [NSKeyedArchiver archivedDataWithRootObject:ship];
+        [archivePositionShips addObject:encodedObjectShip];
+        NSLog(@"ship - x = %1.1f, y = %1.1f, width = %1.1f, height = %1.1f", ship.frame.origin.x, ship.frame.origin.y,
+              ship.frame.size.width, ship.frame.size.height);
+    }
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:archivePositionShips forKey:kKeyPositionSips];
+    [userDefaults synchronize];
+}
+
+- (void)loadPositionShips
+{
+    /*
+     for (int i = 0; i < [self.collectionShip count]; ++i) {
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+     NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
+     NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
+     NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
+     NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
+     
+     CGFloat x = [[userDefaults objectForKey:keyX] floatValue];
+     CGFloat y = [[userDefaults objectForKey:keyY] floatValue];
+     CGFloat width = [[userDefaults objectForKey:keyWidth] floatValue];
+     CGFloat height = [[userDefaults objectForKey:keyHeight] floatValue];
+     
+     CGRect frame = CGRectMake(x, y, width, height);
+     UIView *view = [self.collectionShip objectAtIndex:i];
+     view.frame = frame;
+     }
+     */
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray *positionShips = [userDefaults objectForKey:kKeyPositionSips];
+    for (int i = 0; i < positionShips.count; i++) {
+        UIView * currentShipView = [self.collectionShip objectAtIndex:i];
+        [self.view addSubview:currentShipView];
     }
 }
 

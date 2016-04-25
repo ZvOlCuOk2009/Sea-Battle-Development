@@ -23,7 +23,6 @@ static NSString *buttonImgNo = @"button no";
 
 @interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
 
-//@property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionShip;
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionEnemyShip;
 @property (retain, nonatomic) UIView *hitView;
 @property (retain, nonatomic) UIView *alertView;
@@ -46,24 +45,22 @@ static NSString *buttonImgNo = @"button no";
 {
     [super viewWillAppear:animated];
     for (int i = 0; i < self.collectionShip.count; i++) {
-        
         UIView * currentShipView = [self.collectionShip objectAtIndex:i];
         NSLog(@"currentShipView %d - x = %1.1f, y = %1.1f, width = %1.1f, height = %1.1f", i, currentShipView.frame.origin.x, currentShipView.frame.origin.y, currentShipView.frame.size.width, currentShipView.frame.size.height);
         [self.view addSubview:currentShipView];
     }
-//    [self loadData];
 }
 
-#pragma mark -
-
-- (void)transitionLocation:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height
-{
-    CGRect frame = CGRectMake(x, y, width, height);
-    UIView *ship = [[UIView alloc]initWithFrame:frame];
-    ship.backgroundColor = [UIColor redColor];
-    [self.view addSubview:ship];
-//    NSLog(@"Game x = %1.1f, y = %1.1f, wid = %1.1f, hei = %1.1f", x, y, width, height);
-}
+//#pragma mark -
+//
+//- (void)transitionLocation:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height
+//{
+//    CGRect frame = CGRectMake(x, y, width, height);
+//    UIView *ship = [[UIView alloc]initWithFrame:frame];
+//    ship.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:ship];
+////    NSLog(@"Game x = %1.1f, y = %1.1f, wid = %1.1f, hei = %1.1f", x, y, width, height);
+//}
 
 #pragma mark - Touches
 
