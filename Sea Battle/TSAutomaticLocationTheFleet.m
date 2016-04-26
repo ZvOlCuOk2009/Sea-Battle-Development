@@ -24,16 +24,18 @@ static NSInteger correctionValue = 12;
                              ship.frame = rect;
                              if ([self randomRatation] == YES) {
                                  ship.transform = CGAffineTransformMakeRotation(M_PI_2);
-                                 [self.delegate translationLocationFleet:ships];
                                  CGPoint point = [self calculationOfNearestCells:ship.frame.origin];
                                  CGRect frame = CGRectMake(point.x, point.y, ship.frame.size.width, ship.frame.size.height);
                                  ship.frame = frame;
+                                 [self.delegate translationLocationFleet:ships];
+                                 NSLog(@"Origin Point - x = %1.1f, y = %1.1f", ship.frame.origin.x, ship.frame.origin.y);
                              } else {
                                  ship.transform = CGAffineTransformMakeRotation(M_PI);
                                  CGPoint point = [self calculationOfNearestCells:ship.frame.origin];
                                  CGRect frame = CGRectMake(point.x, point.y, ship.frame.size.width, ship.frame.size.height);
                                  ship.frame = frame;
                                  [self.delegate translationLocationFleet:ships];
+                                 NSLog(@"Origin Point - x = %1.1f, y = %1.1f", ship.frame.origin.x, ship.frame.origin.y);
                              }
                          }];
     }
@@ -57,13 +59,13 @@ static NSInteger correctionValue = 12;
 
 - (NSInteger)randomXvalue
 {
-    NSInteger xValue = arc4random_uniform(110) + 353;
+    NSInteger xValue = arc4random_uniform(1970 / 10) + 353;
     return xValue;
 }
 
 - (NSInteger)randomYvalue
 {
-    NSInteger yValue = arc4random_uniform(110) + 101;
+    NSInteger yValue = arc4random_uniform(1960 / 10) + 102;
     return yValue;
 }
 

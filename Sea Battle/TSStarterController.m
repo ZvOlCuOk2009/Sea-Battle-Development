@@ -36,31 +36,25 @@ BOOL positionButtonStart = NO;
     tapGesture.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGesture];
     [tapGesture release];
+    [self loadPositionShips];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     if (loginID == YES) {
-       // [self savePositionShips];
         loginID = NO;
+        [self loadPositionShips];
     } else {
         [self loadPositionShips];
         loginID = YES;
     }
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-}
-
 #pragma mark - Touches
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    [self savePositionShips];
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     _currentView = [self.view hitTest:locationPoint withEvent:event];
@@ -117,7 +111,7 @@ BOOL positionButtonStart = NO;
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromLeft;
     [self.view.window.layer addAnimation:transition forKey:nil];
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil]; 
 }
 
 - (IBAction)nextAction:(id)sender
@@ -131,36 +125,18 @@ BOOL positionButtonStart = NO;
     [self.view.window.layer addAnimation:transition forKey:nil];
     [self presentViewController:controller animated:NO completion:nil];
     controller.collectionShip = self.collectionShip;
+    [self savePositionShips];
     positionButtonStart = YES;
 }
 
-#pragma mark - Save of locations of ships
+#pragma mark - Save and load position ships
 
 - (void)savePositionShips
 {
-    /*
-    for (int i = 0; i < [self.collectionShip count]; ++i) {
-        UIView *ship = [self.collectionShip objectAtIndex:i];
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
-        NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
-        NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
-        NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
-
-        [userDefaults setFloat:ship.frame.origin.x forKey:keyX];
-        [userDefaults setFloat:ship.frame.origin.y forKey:keyY];
-        [userDefaults setFloat:ship.frame.size.width forKey:keyWidth];
-        [userDefaults setFloat:ship.frame.size.height forKey:keyHeight];
-        [userDefaults synchronize];
-    }
-     */
-    
     NSMutableArray *archivePositionShips = [NSMutableArray arrayWithCapacity:self.collectionShip.count];
     for (UIView * ship in self.collectionShip) {
         NSData * encodedObjectShip = [NSKeyedArchiver archivedDataWithRootObject:ship];
         [archivePositionShips addObject:encodedObjectShip];
-        NSLog(@"ship - x = %1.1f, y = %1.1f, width = %1.1f, height = %1.1f", ship.frame.origin.x, ship.frame.origin.y,
-              ship.frame.size.width, ship.frame.size.height);
     }
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:archivePositionShips forKey:kKeyPositionSips];
@@ -169,25 +145,6 @@ BOOL positionButtonStart = NO;
 
 - (void)loadPositionShips
 {
-    /*
-     for (int i = 0; i < [self.collectionShip count]; ++i) {
-     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-     NSString *keyX = [NSString stringWithFormat:@"origin.x %d", i];
-     NSString *keyY = [NSString stringWithFormat:@"origin.y %d", i];
-     NSString *keyWidth = [NSString stringWithFormat:@"width %d", i];
-     NSString *keyHeight = [NSString stringWithFormat:@"height %d", i];
-     
-     CGFloat x = [[userDefaults objectForKey:keyX] floatValue];
-     CGFloat y = [[userDefaults objectForKey:keyY] floatValue];
-     CGFloat width = [[userDefaults objectForKey:keyWidth] floatValue];
-     CGFloat height = [[userDefaults objectForKey:keyHeight] floatValue];
-     
-     CGRect frame = CGRectMake(x, y, width, height);
-     UIView *view = [self.collectionShip objectAtIndex:i];
-     view.frame = frame;
-     }
-     */
-    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSArray *positionShips = [userDefaults objectForKey:kKeyPositionSips];
     for (int i = 0; i < positionShips.count; i++) {
@@ -198,9 +155,9 @@ BOOL positionButtonStart = NO;
 
 
 - (void)dealloc {
-//    [_collectionShip release];
-//    [_currentView release];
-//    [_hitView release];
+    [_collectionShip release];
+    [_currentView release];
+    [_hitView release];
     [super dealloc];
 }
 @end

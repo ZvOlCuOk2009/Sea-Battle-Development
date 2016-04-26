@@ -34,7 +34,7 @@ static NSString *typeSound = @"mp3";
     NSString *path = [[NSBundle mainBundle] pathForResource:pathResource ofType:typeSound];
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:[NSURL fileURLWithPath:path]];
     _player = [[AVPlayer alloc] initWithPlayerItem:item];
-    _player.volume = 0.7;
+    _player.volume = 0.5;
     [_player play];
     [item release];
 }

@@ -8,6 +8,7 @@
 
 #import "TSCalculationService.h"
 #import "TSSoundManager.h"
+#import "TSSettingsController.h"
 
 static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;
@@ -24,26 +25,29 @@ static BOOL identifier = YES;
 
 - (void)calculateTheAreaForRectangle:(CGPoint)transmittedPoint ships:(NSArray *)collectionShips
 {
-    _rect = CGRectMake((long)[self calculationValuePositionX:transmittedPoint],
-                       (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
-    for (UIView *ship in collectionShips) {
-        BOOL verification = CGRectContainsPoint(ship.frame, transmittedPoint);
-        if (verification == YES) {
-//            NSLog(@"RECT USER x = %ld, y = %ld", (long)[self calculationValuePositionX:transmittedPoint],
-//                                                     (long)[self calculationValuePositionY:transmittedPoint]);
-            if (transmittedPoint.x <= 550 && transmittedPoint.x >= 330 && transmittedPoint.y <= 296 && transmittedPoint.y >= 79) {
-                [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
-                identifier = NO;
+    CGRect fieldConstraints = CGRectMake(331, 79, 220, 219);
+    if (CGRectContainsPoint(fieldConstraints, transmittedPoint)) {
+        _rect = CGRectMake((long)[self calculationValuePositionX:transmittedPoint],
+                           (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
+        if (soundButton == YES) {
+            [[TSSoundManager sharedManager] shotSound];
+            for (UIView *ship in collectionShips) {
+                BOOL verification = CGRectContainsPoint(ship.frame, transmittedPoint);
+                if (verification == YES) {
+                    [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
+                    identifier = NO;
+                }
             }
         }
-    }
-    if (identifier == YES) {
-        [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.delegate transitionProgress];
-        });
-    } else {
-        identifier = YES;
+        
+        if (identifier == YES) {
+            [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.delegate transitionProgress];
+            });
+        } else {
+            identifier = YES;
+        }
     }
 }
 

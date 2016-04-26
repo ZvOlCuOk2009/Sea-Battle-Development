@@ -51,9 +51,9 @@
 }
 
 - (void)dealloc {
-//    [_gameCompButton release];
-//    [_gameBluetoothButton release];
-//    [_loadingIndicatorView release];
+    [_gameCompButton release];
+    [_gameBluetoothButton release];
+    [_loadingIndicatorView release];
     [super dealloc];
 }
 @end

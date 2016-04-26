@@ -21,6 +21,8 @@ static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
 static NSString *buttonImgNo = @"button no";
 
+static NSInteger counter = 1;
+
 @interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
 
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionEnemyShip;
@@ -46,21 +48,9 @@ static NSString *buttonImgNo = @"button no";
     [super viewWillAppear:animated];
     for (int i = 0; i < self.collectionShip.count; i++) {
         UIView * currentShipView = [self.collectionShip objectAtIndex:i];
-        NSLog(@"currentShipView %d - x = %1.1f, y = %1.1f, width = %1.1f, height = %1.1f", i, currentShipView.frame.origin.x, currentShipView.frame.origin.y, currentShipView.frame.size.width, currentShipView.frame.size.height);
         [self.view addSubview:currentShipView];
     }
 }
-
-//#pragma mark -
-//
-//- (void)transitionLocation:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height
-//{
-//    CGRect frame = CGRectMake(x, y, width, height);
-//    UIView *ship = [[UIView alloc]initWithFrame:frame];
-//    ship.backgroundColor = [UIColor redColor];
-//    [self.view addSubview:ship];
-////    NSLog(@"Game x = %1.1f, y = %1.1f, wid = %1.1f, hei = %1.1f", x, y, width, height);
-//}
 
 #pragma mark - Touches
 
@@ -69,16 +59,10 @@ static NSString *buttonImgNo = @"button no";
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     if (positionButtonStart == YES) {
-        BOOL verification = CGRectContainsPoint(_hitView.frame, locationPoint); // для предотвращения повторного нажатия
-        if (verification == NO) {
-            if (userInteractionAlert == NO) {
-                _servise = [[TSCalculationService alloc] init];
-                _servise.delegate = self;
-                [_servise calculateTheAreaForRectangle:locationPoint ships:self.collectionEnemyShip];
-                if (soundButton == YES) {
-                    [[TSSoundManager sharedManager] shotSound];
-                }
-            }
+        if (userInteractionAlert == NO) {
+            _servise = [[TSCalculationService alloc] init];
+            _servise.delegate = self;
+            [_servise calculateTheAreaForRectangle:locationPoint ships:self.collectionEnemyShip];
         } else {
             NSLog(@"ПОВТОР!");
         }
@@ -107,10 +91,6 @@ static NSString *buttonImgNo = @"button no";
 - (void)calculationEnemyShotView:(CGRect)rect point:(CGPoint)point color:(UIColor *)color
 {
     BOOL verification = CGRectContainsPoint(_hitView.frame, point);
-//    NSLog(@"HitView.frame x = %ld, y = %ld, width = %ld, height = %ld,", (long)_hitView.frame.origin.x,
-//                                                                         (long)_hitView.frame.origin.x,
-//                                                                         (long)_hitView.frame.size.width,
-//                                                                         (long)_hitView.frame.size.height);
     if (verification == NO) {
         [self noteShot:rect color:color];
     } else {
@@ -154,6 +134,11 @@ static NSString *buttonImgNo = @"button no";
         userInteractionAlert = YES;
     }
 }
+- (IBAction)settinsAction:(id)sender {
+    
+    TSSettingsController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSSettingsController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
 
 - (IBAction)avtoAction:(id)sender {
     
@@ -166,6 +151,7 @@ static NSString *buttonImgNo = @"button no";
 {
     for (UIView *ship in ships) {
         ship.backgroundColor = [UIColor greenColor];
+        NSLog(@"Point %ld - x = %1.1f, y = %1.1f", (long)counter++, ship.frame.origin.x, ship.frame.origin.y);
         [self.view addSubview:ship];
     }
 }
@@ -182,7 +168,7 @@ static NSString *buttonImgNo = @"button no";
 
 - (void)hangleButtonYes
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     userInteractionAlert = NO;
 }
 
@@ -209,12 +195,12 @@ static NSString *buttonImgNo = @"button no";
 #pragma mark - Destruction of objects
 
 - (void)dealloc {
-//    [_collectionShip release];
-//    [_collectionEnemyShip release];
-//    [_servise release];
-//    [_responseShots release];
-//    [_alertView release];
-//    [_button release];
+    [_collectionShip release];
+    [_collectionEnemyShip release];
+    [_servise release];
+    [_responseShots release];
+    [_alertView release];
+    [_button release];
     [super dealloc];
 }
 
