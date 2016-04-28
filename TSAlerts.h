@@ -12,7 +12,8 @@
 
 @interface TSAlerts : NSObject
 
-+ (void)viewNoteShot:(CGRect)rect color:(UIColor *)color parentVIew:(UIView *)parentVIew view:(UIView *)view;
++ (UIView *)infoBanner:(UIView *)parentView;
++ (void)viewNoteShot:(CGRect)frame color:(UIColor *)color parentVIew:(UIView *)parentVIew view:(UIView *)view;
 + (UIView *)createdAlertGameOver:(UIView *)parentView;
 
 @end

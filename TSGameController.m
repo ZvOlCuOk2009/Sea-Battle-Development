@@ -20,6 +20,7 @@ static BOOL userInteractionAlert = NO;
 static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
 static NSString *buttonImgNo = @"button no";
+static NSInteger sideBotton = 50;
 
 static NSInteger counter = 1;
 
@@ -41,6 +42,7 @@ static NSInteger counter = 1;
     [super viewDidLoad];
     UIImage *image = [UIImage imageNamed:backgroundSheet];
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -56,6 +58,7 @@ static NSInteger counter = 1;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
+   _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     if (positionButtonStart == YES) {
@@ -110,6 +113,7 @@ static NSInteger counter = 1;
 
 - (void)transitionProgress
 {
+    _arrowIndication.image = [UIImage imageNamed:@"arrowRed"];
     _responseShots = [[TSCalculationOfResponseShots alloc] init];
     _responseShots.delegate = self;
     [_responseShots shotRequest:self.collectionShip];
@@ -160,7 +164,7 @@ static NSInteger counter = 1;
 
 - (UIButton *)buttonSelected:(NSString *)question  x:(CGFloat)x y:(CGFloat)y
 {
-    _button = [[UIButton alloc] initWithFrame:CGRectMake(x, y, 50, 50)];
+    _button = [[UIButton alloc] initWithFrame:CGRectMake(x, y, sideBotton, sideBotton)];
     UIImage *image = [UIImage imageNamed:question];
     [_button setImage:image forState:UIControlStateNormal];
     return _button;
@@ -184,9 +188,6 @@ static NSInteger counter = 1;
 
 - (void)userInteractionEnabled
 {
-    for (UIView *ship in self.collectionShip) {
-        ship.userInteractionEnabled = NO;
-    }
     for (UIView *ship in self.collectionEnemyShip) {
         ship.userInteractionEnabled = NO;
     }
@@ -201,6 +202,7 @@ static NSInteger counter = 1;
     [_responseShots release];
     [_alertView release];
     [_button release];
+    [_arrowIndication release];
     [super dealloc];
 }
 

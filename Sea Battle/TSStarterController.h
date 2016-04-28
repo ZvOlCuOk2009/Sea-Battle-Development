@@ -6,6 +6,8 @@
 //  Copyright © 2016 Tsvigun Alexandr. All rights reserved.
 //
 
+//  Стартовый контроллер
+
 #import <UIKit/UIKit.h>
 
 extern BOOL positionButtonStart;

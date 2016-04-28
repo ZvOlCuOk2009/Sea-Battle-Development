@@ -156,7 +156,7 @@ BOOL positionButtonStart = NO;
 
 - (void)dealloc {
     [_collectionShip release];
-    [_currentView release];
+    _currentView = nil;
     [_hitView release];
     [super dealloc];
 }

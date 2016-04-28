@@ -6,6 +6,8 @@
 //  Copyright © 2016 Tsvigun Alexandr. All rights reserved.
 //
 
+//  Класс автоматического расположения врежеского флота
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 

@@ -6,11 +6,13 @@
 //  Copyright © 2016 Tsvigun Alexandr. All rights reserved.
 //
 
+//  Игровой контроллер
 
 #import <UIKit/UIKit.h>
 
 @interface TSGameController : UIViewController
 
 @property (retain, nonatomic) NSArray *collectionShip;
+@property (retain, nonatomic) IBOutlet UIImageView *arrowIndication;
 
 @end

@@ -8,18 +8,42 @@
 
 #import "TSHeadbandController.h"
 #import "TSStarterController.h"
+#import "TSFloatingRepresentation.h"
+#import "TSButton.h"
+
+static NSInteger counter = 1;
 
 @interface TSHeadbandController ()
 
 @property (retain, nonatomic) IBOutlet UIButton *gameCompButton;
 @property (retain, nonatomic) IBOutlet UIButton *gameBluetoothButton;
 @property (retain, nonatomic) IBOutlet UIView *loadingIndicatorView;
+@property (retain, nonatomic) TSFloatingRepresentation *infoBanner;
 
 @end
 
 @implementation TSHeadbandController
 
-- (void)viewDidLoad
+-  (void)viewWillAppear:(BOOL)animated
+{
+    if (counter == 1) {
+        _infoBanner = [[TSFloatingRepresentation alloc] initWithInfoBanner:self.view];
+        CGRect frame = CGRectMake(330, 200, 75, 30);
+        UIButton *nextButton = [[[UIButton alloc] initWithFrame:frame] autorelease];
+        [nextButton setImage:[UIImage imageNamed:@"next"] forState:UIControlStateNormal];
+        [nextButton addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
+        [_infoBanner addSubview:nextButton];
+        
+        [UIView animateWithDuration:1.0
+                         animations:^{
+                             _infoBanner.frame = CGRectMake(self.view.bounds.size.width - 497, self.view.bounds.size.height - 280, self.view.bounds.size.width - 142, self.view.bounds.size.height - 80);
+                             [self.view addSubview:_infoBanner];
+                         }];
+        counter++;
+    }
+}
+
+- (void)startScene
 {
     [UIView animateWithDuration:3.0
                      animations:^{
@@ -35,6 +59,15 @@
                              _loadingIndicatorView.alpha = 0;
                          }];
     });
+}
+
+- (void)nextAction
+{
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         _infoBanner.frame = CGRectMake(self.view.bounds.size.width - 497, self.view.bounds.size.height + 280, self.view.bounds.size.width - 142, self.view.bounds.size.height - 80);
+                     }];
+    [self startScene];
 }
 
 - (IBAction)startAction:(id)sender
@@ -54,6 +87,7 @@
     [_gameCompButton release];
     [_gameBluetoothButton release];
     [_loadingIndicatorView release];
+    [_infoBanner release];
     [super dealloc];
 }
 @end

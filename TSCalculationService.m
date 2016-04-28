@@ -9,6 +9,7 @@
 #import "TSCalculationService.h"
 #import "TSSoundManager.h"
 #import "TSSettingsController.h"
+#import "TSGameController.h"
 
 static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;

@@ -39,7 +39,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="46"/>
-                                <state key="normal" title="Играть с компьютером">
+                                <state key="normal" title="Играть со смартфоном">
                                     <color key="titleColor" red="0.4431372549" green="0.16862745100000001" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -79,6 +79,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="hUe-lH-P6j">
+                                <rect key="frame" x="259" y="164" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" id="kwW-LL-o94">
                                 <rect key="frame" x="-1000" y="-1000" width="2500" height="2500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -176,6 +180,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="arrowIndication" destination="hUe-lH-P6j" id="fqa-iS-gfE"/>
                         <outletCollection property="collectionEnemyShip" destination="xCJ-0K-cAT" id="OD8-yx-NGl"/>
                         <outletCollection property="collectionEnemyShip" destination="W4x-I5-le2" id="4DQ-R3-DA4"/>
                         <outletCollection property="collectionEnemyShip" destination="BPY-s9-Hfy" id="K4H-Iy-yco"/>

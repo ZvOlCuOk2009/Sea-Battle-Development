@@ -6,6 +6,8 @@
 //  Copyright © 2016 Tsvigun Alexandr. All rights reserved.
 //
 
+//  Контроллер загрузки
+
 #import <UIKit/UIKit.h>
 
 @interface TSHeadbandController : UIViewController
