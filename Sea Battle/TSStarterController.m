@@ -129,6 +129,15 @@ BOOL positionButtonStart = NO;
     positionButtonStart = YES;
 }
 
+//- (void)verificationCountShip
+//{
+//    if (_collectionShip) {
+//        <#statements#>
+//    }
+//}
+
+//?????????????????????????????
+
 #pragma mark - Save and load position ships
 
 - (void)savePositionShips
@@ -156,8 +165,8 @@ BOOL positionButtonStart = NO;
 
 - (void)dealloc {
     [_collectionShip release];
-    _currentView = nil;
     [_hitView release];
+    _currentView = nil;
     [super dealloc];
 }
 @end

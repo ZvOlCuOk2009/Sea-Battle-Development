@@ -16,6 +16,8 @@ static NSInteger indentationOnY = 79;
 static int fieldSide = 219;
 static BOOL counter = YES;
 
+NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculatResponseColorArrowDidChangeNotification";
+
 @interface TSCalculationOfResponseShots ()
 
 @property (assign, nonatomic) CGPoint overallPoint;
@@ -27,12 +29,14 @@ static BOOL counter = YES;
 
 - (void)shotRequest:(NSArray *)collectionShips
 {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     _overallPoint = [self randomPoint];
     _rect = [self generationOfRectangleBasedOnRandomPoint];
     for (UIView *ship in collectionShips) {
-        BOOL verification = CGRectContainsPoint(ship.frame, _overallPoint);
-        if (verification == YES) {
+        if (CGRectContainsPoint(ship.frame, _overallPoint)) {
             [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
+            [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
+                                              object:@"Стрелка красная"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.delegate transitionProgress];
             });
@@ -41,6 +45,8 @@ static BOOL counter = YES;
     }
     if (counter == YES) {
         [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self grayBackgroundColor]];
+        [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
+                                          object:@"Стрелка зеленая"];
     } else {
         counter = YES;
     }
@@ -64,7 +70,6 @@ static BOOL counter = YES;
 {
     CGRect rect = CGRectMake([self calculationValuePositionX:_overallPoint],
                              [self calculationValuePositionY:_overallPoint], sideRect, sideRect);
-//    NSLog(@"RECT ENEMY x = %ld, y = %ld, width = 22, height = 22", (long)rect.origin.x, (long)rect.origin.y);
     return rect;
 }
 

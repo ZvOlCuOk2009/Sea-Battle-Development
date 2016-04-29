@@ -14,7 +14,9 @@
 static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;
 static CGFloat correctionValueY = 12;
-static BOOL identifier = YES;
+static BOOL resultIdentifier = YES;
+
+NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalculationServiceColorArrowDidChangeNotification";
 
 @interface TSCalculationService ()
 
@@ -26,28 +28,29 @@ static BOOL identifier = YES;
 
 - (void)calculateTheAreaForRectangle:(CGPoint)transmittedPoint ships:(NSArray *)collectionShips
 {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     CGRect fieldConstraints = CGRectMake(331, 79, 220, 219);
     if (CGRectContainsPoint(fieldConstraints, transmittedPoint)) {
         _rect = CGRectMake((long)[self calculationValuePositionX:transmittedPoint],
                            (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
-        if (soundButton == YES) {
-            [[TSSoundManager sharedManager] shotSound];
-            for (UIView *ship in collectionShips) {
-                BOOL verification = CGRectContainsPoint(ship.frame, transmittedPoint);
-                if (verification == YES) {
-                    [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
-                    identifier = NO;
-                }
+        for (UIView *ship in collectionShips) {
+            if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
+                [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
+                resultIdentifier = NO;
             }
         }
-        
-        if (identifier == YES) {
+        if (resultIdentifier == YES) {
             [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
+            [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
+                                              object:@"Стрелка красная!!!"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.delegate transitionProgress];
             });
         } else {
-            identifier = YES;
+            resultIdentifier = YES;
+        }
+        if (soundButton == YES) {
+            [[TSSoundManager sharedManager] shotSound];
         }
     }
 }

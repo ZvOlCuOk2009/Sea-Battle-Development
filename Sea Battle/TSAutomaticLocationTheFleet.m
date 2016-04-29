@@ -24,21 +24,22 @@ static NSInteger correctionValue = 12;
                              ship.frame = rect;
                              if ([self randomRatation] == YES) {
                                  ship.transform = CGAffineTransformMakeRotation(M_PI_2);
-                                 CGPoint point = [self calculationOfNearestCells:ship.frame.origin];
-                                 CGRect frame = CGRectMake(point.x, point.y, ship.frame.size.width, ship.frame.size.height);
-                                 ship.frame = frame;
-                                 [self.delegate translationLocationFleet:ships];
-                                 NSLog(@"Origin Point - x = %1.1f, y = %1.1f", ship.frame.origin.x, ship.frame.origin.y);
+                                 [self randomPlacementOfShips:ships ship:ship];
                              } else {
                                  ship.transform = CGAffineTransformMakeRotation(M_PI);
-                                 CGPoint point = [self calculationOfNearestCells:ship.frame.origin];
-                                 CGRect frame = CGRectMake(point.x, point.y, ship.frame.size.width, ship.frame.size.height);
-                                 ship.frame = frame;
-                                 [self.delegate translationLocationFleet:ships];
-                                 NSLog(@"Origin Point - x = %1.1f, y = %1.1f", ship.frame.origin.x, ship.frame.origin.y);
+                                 [self randomPlacementOfShips:ships ship:ship];
                              }
                          }];
     }
+}
+
+- (void)randomPlacementOfShips:(NSArray *)ships ship:(UIView *)ship
+{
+    CGPoint point = [self calculationOfNearestCells:ship.frame.origin];
+    CGRect frame = CGRectMake(point.x, point.y, ship.frame.size.width, ship.frame.size.height);
+    ship.frame = frame;
+    [self.delegate translationLocationFleet:ships];
+    NSLog(@"Origin Point - x = %1.1f, y = %1.1f", ship.frame.origin.x, ship.frame.origin.y);
 }
 
 - (CGPoint)calculationOfNearestCells:(CGPoint)point

@@ -24,6 +24,8 @@ static NSInteger sideBotton = 50;
 
 static NSInteger counter = 1;
 
+static NSString *kKeyPositionSips = @"keyPositionSips";
+
 @interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
 
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionEnemyShip;
@@ -42,7 +44,6 @@ static NSInteger counter = 1;
     [super viewDidLoad];
     UIImage *image = [UIImage imageNamed:backgroundSheet];
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
-    _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,13 +53,48 @@ static NSInteger counter = 1;
         UIView * currentShipView = [self.collectionShip objectAtIndex:i];
         [self.view addSubview:currentShipView];
     }
+    _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(getNotificationTSGameController:)
+                               name:TSCalculatResponseColorArrowDidChangeNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(getNotificationTSCalculationService:)
+                               name:TSCalculationServiceColorArrowDidChangeNotification
+                             object:nil];
+    [self loadPositionShips];
 }
 
-#pragma mark - Touches
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSMutableArray *archivePositionShips = [NSMutableArray array];
+    for (UIView *ship in self.collectionShip) {
+        NSData * encodedObjectShip = [NSKeyedArchiver archivedDataWithRootObject:ship];
+        [archivePositionShips addObject:encodedObjectShip];
+    }
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:archivePositionShips forKey:kKeyPositionSips];
+    [userDefaults synchronize];
+}
+
+- (void)loadPositionShips
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray *positionShips = [userDefaults objectForKey:kKeyPositionSips];
+    for (int i = 0; i < positionShips.count; i++) {
+        UIView *currentShipView = [self.collectionShip objectAtIndex:i];
+        [self.view addSubview:currentShipView];
+    }
+}
+
+#pragma mark - Touch
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-   _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     if (positionButtonStart == YES) {
@@ -70,16 +106,6 @@ static NSInteger counter = 1;
             NSLog(@"ПОВТОР!");
         }
     }
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
-{
-    
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
-{
-    
 }
 
 #pragma mark - TSCalculationServiceDelegate
@@ -113,7 +139,6 @@ static NSInteger counter = 1;
 
 - (void)transitionProgress
 {
-    _arrowIndication.image = [UIImage imageNamed:@"arrowRed"];
     _responseShots = [[TSCalculationOfResponseShots alloc] init];
     _responseShots.delegate = self;
     [_responseShots shotRequest:self.collectionShip];
@@ -121,6 +146,22 @@ static NSInteger counter = 1;
     if (soundButton == YES) {
         [[TSSoundManager sharedManager] shotSound];
     }
+}
+
+#pragma mark - Notification
+
+- (void)getNotificationTSGameController:(NSNotification*)notification
+{
+    if ([[notification object] isEqualToString:@"Стрелка зеленая"]) {
+         _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
+    } else if ([[notification object] isEqualToString:@"Стрелка красная"]) {
+        _arrowIndication.image = [UIImage imageNamed:@"arrowRed"];
+    }
+}
+
+- (void)getNotificationTSCalculationService:(NSNotification*)notification
+{
+     _arrowIndication.image = [UIImage imageNamed:@"arrowRed"];
 }
 
 #pragma mark - Actions and alert
@@ -203,6 +244,7 @@ static NSInteger counter = 1;
     [_alertView release];
     [_button release];
     [_arrowIndication release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 

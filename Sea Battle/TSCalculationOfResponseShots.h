@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import "TSGameController.h"
 
+extern NSString *const TSCalculatResponseColorArrowDidChangeNotification;
+
 @protocol TSCalculationOfResponseShotsDelegate
 
 @required
