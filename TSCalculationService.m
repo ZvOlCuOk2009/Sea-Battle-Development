@@ -10,6 +10,7 @@
 #import "TSSoundManager.h"
 #import "TSSettingsController.h"
 #import "TSGameController.h"
+#import "TSCalculationOfResponseShots.h"
 
 static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;
@@ -33,28 +34,30 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
     if (CGRectContainsPoint([self afterShelling], transmittedPoint)) {
         _rect = CGRectMake((long)[self calculationValuePositionX:transmittedPoint],
                            (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
-        if ([[self inspectionOfTheAffectedArea:shots point:transmittedPoint] isEqualToString:@"NO"]) {
-            NSLog(@"НЕТ");
-        } else {
-            NSLog(@"ДА");
-            for (UIView *ship in collectionShips) {
-                if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
-                    [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
-                    resultIdentifier = NO;
-                }
-            }
-            if (resultIdentifier == YES) {
-                [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
-                [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
-                                                  object:@"Стрелка красная!!!"];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.delegate transitionProgress];
-                });
+        if (resolution == YES) {
+            if ([[self inspectionOfTheAffectedArea:shots point:transmittedPoint] isEqualToString:@"NO"]) {
+                NSLog(@"НЕТ");
             } else {
-                resultIdentifier = YES;
-            }
-            if (soundButton == YES) {
-                [[TSSoundManager sharedManager] shotSound];
+                NSLog(@"ДА");
+                for (UIView *ship in collectionShips) {
+                    if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
+                        [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
+                        resultIdentifier = NO;
+                    }
+                }
+                if (resultIdentifier == YES) {
+                    [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
+                    [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
+                                                      object:@"Стрелка красная!!!"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.delegate transitionProgress];
+                    });
+                } else {
+                    resultIdentifier = YES;
+                }
+                if (soundButton == YES) {
+                    [[TSSoundManager sharedManager] shotSound];
+                }
             }
         }
     }
@@ -73,16 +76,10 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
 {
     NSString *searchTheAffectedArea = nil;
     for (UIView *view in shots) {
-        
         if (CGRectContainsPoint(view.frame, point)) {
             searchTheAffectedArea = @"NO";
-            //NSLog(@"NO");
-        } //else {
-            //searchTheAffectedArea = @"YES";
-            //NSLog(@"YES");
-        //}
+        }
     }
-    NSLog(@"*****");
     return searchTheAffectedArea;
 }
 

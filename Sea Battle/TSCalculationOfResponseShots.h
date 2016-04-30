@@ -12,6 +12,7 @@
 #import "TSGameController.h"
 
 extern NSString *const TSCalculatResponseColorArrowDidChangeNotification;
+extern BOOL resolution;
 
 @protocol TSCalculationOfResponseShotsDelegate
 

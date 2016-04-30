@@ -15,6 +15,7 @@ static NSInteger indentationOnX = 21;
 static NSInteger indentationOnY = 79;
 static int fieldSide = 219;
 static BOOL counter = YES;
+BOOL resolution = YES;
 
 NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculatResponseColorArrowDidChangeNotification";
 
@@ -41,6 +42,7 @@ NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculat
                 [self.delegate transitionProgress];
             });
             counter = NO;
+            resolution = NO;
         }
     }
     if (counter == YES) {
@@ -49,6 +51,7 @@ NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculat
                                           object:@"Стрелка зеленая"];
     } else {
         counter = YES;
+        resolution = YES;
     }
 }
 
