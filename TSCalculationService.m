@@ -21,38 +21,69 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
 @interface TSCalculationService ()
 
 @property (assign, nonatomic) CGRect rect;
+@property (assign, nonatomic) BOOL inspection;
 
 @end
 
 @implementation TSCalculationService
 
-- (void)calculateTheAreaForRectangle:(CGPoint)transmittedPoint ships:(NSArray *)collectionShips
+- (void)calculateTheAreaForRectangle:(CGPoint)transmittedPoint ships:(NSArray *)collectionShips shots:(NSArray *)shots
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    CGRect fieldConstraints = CGRectMake(331, 79, 220, 219);
-    if (CGRectContainsPoint(fieldConstraints, transmittedPoint)) {
+    if (CGRectContainsPoint([self afterShelling], transmittedPoint)) {
         _rect = CGRectMake((long)[self calculationValuePositionX:transmittedPoint],
                            (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
-        for (UIView *ship in collectionShips) {
-            if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
-                [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
-                resultIdentifier = NO;
+        if ([[self inspectionOfTheAffectedArea:shots point:transmittedPoint] isEqualToString:@"NO"]) {
+            NSLog(@"НЕТ");
+        } else {
+            NSLog(@"ДА");
+            for (UIView *ship in collectionShips) {
+                if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
+                    [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
+                    resultIdentifier = NO;
+                }
+            }
+            if (resultIdentifier == YES) {
+                [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
+                [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
+                                                  object:@"Стрелка красная!!!"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.delegate transitionProgress];
+                });
+            } else {
+                resultIdentifier = YES;
+            }
+            if (soundButton == YES) {
+                [[TSSoundManager sharedManager] shotSound];
             }
         }
-        if (resultIdentifier == YES) {
-            [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
-            [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
-                                              object:@"Стрелка красная!!!"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.delegate transitionProgress];
-            });
-        } else {
-            resultIdentifier = YES;
-        }
-        if (soundButton == YES) {
-            [[TSSoundManager sharedManager] shotSound];
-        }
     }
+}
+
+#pragma mark - Field
+
+- (CGRect)afterShelling
+{
+    return CGRectMake(331, 79, 220, 219);
+}
+
+#pragma mark - Inspection of the affected area
+
+- (NSString *)inspectionOfTheAffectedArea:(NSArray *)shots point:(CGPoint)point
+{
+    NSString *searchTheAffectedArea = nil;
+    for (UIView *view in shots) {
+        
+        if (CGRectContainsPoint(view.frame, point)) {
+            searchTheAffectedArea = @"NO";
+            //NSLog(@"NO");
+        } //else {
+            //searchTheAffectedArea = @"YES";
+            //NSLog(@"YES");
+        //}
+    }
+    NSLog(@"*****");
+    return searchTheAffectedArea;
 }
 
 #pragma mark - Background Color View

@@ -29,7 +29,7 @@ extern NSString *const TSCalculationServiceColorArrowDidChangeNotification;
 
 @property (assign, nonatomic) id <TSCalculationServiceDelegate> delegate;
 
-- (void)calculateTheAreaForRectangle:(CGPoint)point ships:(NSArray *)collectionShips;
+- (void)calculateTheAreaForRectangle:(CGPoint)point ships:(NSArray *)collectionShips shots:(NSArray *)shots;
 
 @end
 

@@ -44,6 +44,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
     [super viewDidLoad];
     UIImage *image = [UIImage imageNamed:backgroundSheet];
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    self.shots = [NSMutableArray array];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -98,13 +99,9 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
     UITouch *touch = [touches anyObject];
     CGPoint locationPoint = [touch locationInView:self.view];
     if (positionButtonStart == YES) {
-        if (userInteractionAlert == NO) {
-            _servise = [[TSCalculationService alloc] init];
-            _servise.delegate = self;
-            [_servise calculateTheAreaForRectangle:locationPoint ships:self.collectionEnemyShip];
-        } else {
-            NSLog(@"ПОВТОР!");
-        }
+        _servise = [[TSCalculationService alloc] init];
+        _servise.delegate = self;
+        [_servise calculateTheAreaForRectangle:locationPoint ships:self.collectionEnemyShip shots:self.shots];
     }
 }
 
@@ -132,7 +129,8 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 
 - (void)noteShot:(CGRect)rect color:(UIColor *)color
 {
-    [TSAlerts viewNoteShot:rect color:color parentVIew:self.view view:_hitView];
+    UIView *shot = [TSAlerts viewNoteShot:rect color:color parentVIew:self.view view:_hitView];
+    [self.shots addObject:shot];
 }
 
 #pragma mark - Enemy shot
@@ -168,7 +166,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 
 - (IBAction)backAtion:(id)sender {
  
-    if (userInteractionAlert == NO) {
+//    if (userInteractionAlert == NO) {
         _alertView = [TSAlerts createdAlertGameOver:self.view];
         UIButton *buttonYes = [self buttonSelected:buttonImgYes x:40 y:50];
         UIButton *buttonNo = [self buttonSelected:buttonImgNo x:110 y:50];
@@ -176,8 +174,8 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
         [buttonNo addTarget:self action:@selector(hangleButtonNo) forControlEvents:UIControlEventTouchUpInside];
         [_alertView addSubview:buttonYes];
         [_alertView addSubview:buttonNo];
-        userInteractionAlert = YES;
-    }
+//        userInteractionAlert = YES;
+//    }
 }
 - (IBAction)settinsAction:(id)sender {
     
@@ -214,7 +212,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 - (void)hangleButtonYes
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    userInteractionAlert = NO;
+//    userInteractionAlert = NO;
 }
 
 - (void)hangleButtonNo
@@ -224,7 +222,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
                          _alertView.frame = CGRectMake(184, 520, 200, 120);
                          _alertView.alpha = 0;
                      }];
-        userInteractionAlert = NO;
+//        userInteractionAlert = NO;
 }
 
 - (void)userInteractionEnabled

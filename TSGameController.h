@@ -13,6 +13,7 @@
 @interface TSGameController : UIViewController
 
 @property (retain, nonatomic) NSArray *collectionShip;
+@property (retain, nonatomic) NSMutableArray *shots;
 @property (retain, nonatomic) IBOutlet UIImageView *arrowIndication;
 
 @end

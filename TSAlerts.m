@@ -38,7 +38,7 @@ static CGFloat blueColor = 249.0 / 255.0;
 
 #pragma mark - Created view note shot
 
-+ (void)viewNoteShot:(CGRect)frame color:(UIColor *)color parentVIew:(UIView *)parentVIew view:(UIView *)view
++ (UIView *)viewNoteShot:(CGRect)frame color:(UIColor *)color parentVIew:(UIView *)parentVIew view:(UIView *)view
 {
     view = [[[UIView alloc] initWithFrame:frame] autorelease];
     view.backgroundColor = color;
@@ -46,6 +46,7 @@ static CGFloat blueColor = 249.0 / 255.0;
     view.userInteractionEnabled = NO;
     [parentVIew bringSubviewToFront:view];
     [parentVIew addSubview:view];
+    return view;
 }
 
 #pragma mark - Created alert game over
