@@ -28,6 +28,8 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
 
 @implementation TSCalculationService
 
+#pragma mark - Calculate The Area For Rectangle
+
 - (void)calculateTheAreaForRectangle:(CGPoint)transmittedPoint ships:(NSArray *)collectionShips shots:(NSArray *)shots
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -49,6 +51,7 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
                     [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
                     [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
                                                       object:@"Стрелка красная!!!"];
+                    resolution = NO;
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self.delegate transitionProgress];
                     });

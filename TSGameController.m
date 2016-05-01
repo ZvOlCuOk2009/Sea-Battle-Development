@@ -15,16 +15,12 @@
 #import "TSAlerts.h"
 #import "TSSettingsController.h"
 #import "TSAutomaticLocationTheFleet.h"
+#import "TSShotsIndication.h"
 
-static BOOL userInteractionAlert = NO;
 static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
 static NSString *buttonImgNo = @"button no";
 static NSInteger sideBotton = 50;
-
-static NSInteger counter = 1;
-
-static NSString *kKeyPositionSips = @"keyPositionSips";
 
 @interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
 
@@ -66,30 +62,6 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
                            selector:@selector(getNotificationTSCalculationService:)
                                name:TSCalculationServiceColorArrowDidChangeNotification
                              object:nil];
-    [self loadPositionShips];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    NSMutableArray *archivePositionShips = [NSMutableArray array];
-    for (UIView *ship in self.collectionShip) {
-        NSData * encodedObjectShip = [NSKeyedArchiver archivedDataWithRootObject:ship];
-        [archivePositionShips addObject:encodedObjectShip];
-    }
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:archivePositionShips forKey:kKeyPositionSips];
-    [userDefaults synchronize];
-}
-
-- (void)loadPositionShips
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSArray *positionShips = [userDefaults objectForKey:kKeyPositionSips];
-    for (int i = 0; i < positionShips.count; i++) {
-        UIView *currentShipView = [self.collectionShip objectAtIndex:i];
-        [self.view addSubview:currentShipView];
-    }
 }
 
 #pragma mark - Touch
@@ -116,20 +88,14 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 
 - (void)calculationEnemyShotView:(CGRect)rect point:(CGPoint)point color:(UIColor *)color
 {
-    BOOL verification = CGRectContainsPoint(_hitView.frame, point);
-    if (verification == NO) {
-        [self noteShot:rect color:color];
-    } else {
-        NSLog(@"ПОВТОР ПРОТИВНИК!!!");
-        [self transitionProgress];
-    }
+    [self noteShot:rect color:color];
 }
 
 #pragma mark - After firing indication
 
 - (void)noteShot:(CGRect)rect color:(UIColor *)color
 {
-    UIView *shot = [TSAlerts viewNoteShot:rect color:color parentVIew:self.view view:_hitView];
+    UIView *shot = [TSShotsIndication viewNoteShot:rect color:color parentVIew:self.view view:_hitView];
     [self.shots addObject:shot];
 }
 
@@ -139,7 +105,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 {
     _responseShots = [[TSCalculationOfResponseShots alloc] init];
     _responseShots.delegate = self;
-    [_responseShots shotRequest:self.collectionShip];
+    [_responseShots shotRequest:self.collectionShip shots:self.shots];
     
     if (soundButton == YES) {
         [[TSSoundManager sharedManager] shotSound];
@@ -164,19 +130,17 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 
 #pragma mark - Actions and alert
 
-- (IBAction)backAtion:(id)sender {
- 
-//    if (userInteractionAlert == NO) {
-        _alertView = [TSAlerts createdAlertGameOver:self.view];
-        UIButton *buttonYes = [self buttonSelected:buttonImgYes x:40 y:50];
-        UIButton *buttonNo = [self buttonSelected:buttonImgNo x:110 y:50];
-        [buttonYes addTarget:self action:@selector(hangleButtonYes) forControlEvents:UIControlEventTouchUpInside];
-        [buttonNo addTarget:self action:@selector(hangleButtonNo) forControlEvents:UIControlEventTouchUpInside];
-        [_alertView addSubview:buttonYes];
-        [_alertView addSubview:buttonNo];
-//        userInteractionAlert = YES;
-//    }
+- (IBAction)backAtion:(id)sender
+{
+    _alertView = [TSAlerts createdAlertGameOver:self.view];
+    UIButton *buttonYes = [self buttonSelected:buttonImgYes x:40 y:50];
+    UIButton *buttonNo = [self buttonSelected:buttonImgNo x:110 y:50];
+    [buttonYes addTarget:self action:@selector(hangleButtonYes) forControlEvents:UIControlEventTouchUpInside];
+    [buttonNo addTarget:self action:@selector(hangleButtonNo) forControlEvents:UIControlEventTouchUpInside];
+    [_alertView addSubview:buttonYes];
+    [_alertView addSubview:buttonNo];
 }
+
 - (IBAction)settinsAction:(id)sender {
     
     TSSettingsController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSSettingsController"];
@@ -194,7 +158,7 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 {
     for (UIView *ship in ships) {
         ship.backgroundColor = [UIColor greenColor];
-        NSLog(@"Point %ld - x = %1.1f, y = %1.1f", (long)counter++, ship.frame.origin.x, ship.frame.origin.y);
+        //NSLog(@"Point %ld - x = %1.1f, y = %1.1f", (long)counter++, ship.frame.origin.x, ship.frame.origin.y);
         [self.view addSubview:ship];
     }
 }
@@ -212,7 +176,6 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
 - (void)hangleButtonYes
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    userInteractionAlert = NO;
 }
 
 - (void)hangleButtonNo
@@ -222,7 +185,6 @@ static NSString *kKeyPositionSips = @"keyPositionSips";
                          _alertView.frame = CGRectMake(184, 520, 200, 120);
                          _alertView.alpha = 0;
                      }];
-//        userInteractionAlert = NO;
 }
 
 - (void)userInteractionEnabled

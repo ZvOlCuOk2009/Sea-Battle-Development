@@ -13,7 +13,7 @@ static NSString *font = @"Savoye LET";
 static CGFloat redColor = 113.0 / 255.0;
 static CGFloat greenColor = 43.0 / 255.0;
 static CGFloat blueColor = 249.0 / 255.0;
-static NSString *infoText = @"Разместите корабли на поле так, что бы при размещении они не касались друг друга углами. При двойном нажатии, корабль разворачивается на 90 градусов. Стреляйте когда стрелка становится зеленого цвета. Убитый или раненный корабль отмечается красным квадратом, выстрел мимо - серым...\n                               Удачи!!!";
+static NSString *infoText = @"Разместите корабли на поле так, что бы при размещении они не касались друг друга углами. При двойном касании, корабль разворачивается на 90 градусов. Стреляйте когда стрелка становится зеленого цвета. Убитый или раненный корабль отмечается красным квадратом, выстрел мимо - серым...\n                               Удачи!!!";
 
 @implementation TSFloatingRepresentation
 
@@ -21,7 +21,7 @@ static NSString *infoText = @"Разместите корабли на поле 
 {
     self = [super init];
     if (self) {
-        self = [[TSFloatingRepresentation alloc] initWithFrame:[self frameBanner:parentView]];
+        self = [[[TSFloatingRepresentation alloc] initWithFrame:[self frameBanner:parentView]] autorelease];
         self.backgroundColor = [UIColor whiteColor];
         self.alpha = 0.85;
         self.layer.cornerRadius = 5;
@@ -33,7 +33,7 @@ static NSString *infoText = @"Разместите корабли на поле 
 - (UILabel *)textLabel
 {
     CGRect labelFrame = CGRectMake(23, 0, 390, 240);
-    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+    UILabel *label = [[[UILabel alloc] initWithFrame:labelFrame] autorelease];
     [label setTextColor:[self color]];
     [label setFont:[UIFont fontWithName:font size:25.0]];
     [label setText:infoText];

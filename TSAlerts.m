@@ -10,44 +10,11 @@
 
 static NSString *alert = @"Закончить игру?";
 static NSString *font = @"Savoye LET";
-static NSString *infoText = @"Здесь додлжен быть инфо текст!!!";
 static CGFloat redColor = 113.0 / 255.0;
 static CGFloat greenColor = 43.0 / 255.0;
 static CGFloat blueColor = 249.0 / 255.0;
 
 @implementation TSAlerts
-
-#pragma mark - Info banner
-
-+ (UIView *)infoBanner:(UIView *)parentView
-{
-    CGRect frame = CGRectMake(71, 40, 426, 240);
-    UIView *banner = [[UIView alloc] initWithFrame:frame];
-    banner.backgroundColor = [UIColor whiteColor];
-    banner.alpha = 0.85;
-    
-    CGRect labelFrame = CGRectMake(53, 20, 320, 200);
-    UILabel *label = [[[UILabel alloc] initWithFrame:labelFrame] autorelease];
-    [label setTextColor:[UIColor blackColor]];
-    [label setFont:[UIFont fontWithName:font size:34.0]];
-    [label setText:infoText];
-    [banner addSubview:label];
-    [parentView addSubview:banner];
-    return banner;
-}
-
-#pragma mark - Created view note shot
-
-+ (UIView *)viewNoteShot:(CGRect)frame color:(UIColor *)color parentVIew:(UIView *)parentVIew view:(UIView *)view
-{
-    view = [[[UIView alloc] initWithFrame:frame] autorelease];
-    view.backgroundColor = color;
-    view.alpha = 0.7f;
-    view.userInteractionEnabled = NO;
-    [parentVIew bringSubviewToFront:view];
-    [parentVIew addSubview:view];
-    return view;
-}
 
 #pragma mark - Created alert game over
 

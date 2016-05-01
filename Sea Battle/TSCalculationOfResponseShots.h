@@ -30,6 +30,6 @@ extern BOOL resolution;
 
 @property (assign, nonatomic) id <TSCalculationOfResponseShotsDelegate> delegate;
 
-- (void)shotRequest:(NSArray *)collectionShips;
+- (void)shotRequest:(NSArray *)collectionShips shots:(NSArray *)shots;
 
 @end

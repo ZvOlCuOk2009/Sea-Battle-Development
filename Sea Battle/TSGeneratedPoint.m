@@ -10,24 +10,72 @@
 
 static NSInteger cellSize = 22;
 static NSInteger correctionValue = 12;
+static NSInteger intersectionsIdentifier = 1;
 
 @implementation TSGeneratedPoint
 
-- (void)receivingPoint:(CGPoint)point view:(UIView *) currentView tag:(NSInteger)tag
+#pragma mark - Fixation of ships in a grid
+
+- (void)receivingPoint:(CGPoint)point view:(UIView *) currentView tag:(NSInteger)tag ships:(NSArray *)ships 
 {
     if (point.x <= 242 && point.x >= 22 && point.y <= 296 && point.y >= 79) {
-        NSInteger intermediateResultX = point.x / cellSize;
-        NSInteger newOriginX = intermediateResultX * cellSize;
-        NSInteger intermediateResultY = point.y / cellSize;
-        NSInteger newOriginY = (intermediateResultY * cellSize) + correctionValue;
-        CGPoint newPoint = CGPointMake(newOriginX, newOriginY);
+        [self enumerationShips:point view:currentView ships:ships];
+        CGPoint newPoint = CGPointMake([self newOriginX:point], [self newOriginY:point]);
         [self.delegate pointTransmission:newPoint];
     } else {
         currentView.frame = [self returnOldPosition:tag];
     }
 }
 
-//  Заведомо не верный вариант имплементации, дублирование кода, но я не смог додуматься сделать лучше
+- (void)enumerationShips:(CGPoint)point view:(UIView *) currentView ships:(NSArray *)ships
+{
+    for (UIView *ship in ships) {
+        CGFloat xShip = ship.frame.origin.x;
+        CGFloat yShip = ship.frame.origin.y;
+        CGFloat widthShip = ship.frame.size.width;
+        CGFloat heightShip = ship.frame.size.height;
+        
+        CGFloat xCurrentView = currentView.frame.origin.x;
+        CGFloat yCurrentView = currentView.frame.origin.y;
+        
+        
+//        if (NSLocationInRange(xCurrentView, widthRange) || NSLocationInRange(yCurrentView, heightRange)) {
+//            NSLog(@"Пересечение по Х");
+//        } else {
+//            NSLog(@"Нету пересечения по Х");
+//        }
+    }
+}
+
+//-(BOOL)viewIntersectsWithAnotherView:(UIView*)selectedView
+//{
+//    [[UIApplication sharedApplication].keyWindow addSubView:myView];
+//    
+//    NSArray *subViewsInView = [self.view subviews];
+//    for(UIView *theView in subViewsInView) {
+//        if (![selectedView isEqual:theView])
+//            if(CGRectIntersectsRect(selectedView.frame, theView.frame))
+//                return YES;
+//    }
+//    return NO;
+//}
+
+
+- (NSInteger)newOriginX:(CGPoint)point
+{
+    NSInteger intermediateResultX = point.x / cellSize;
+    NSInteger newOriginX = intermediateResultX * cellSize;
+    return newOriginX;
+}
+
+- (NSInteger)newOriginY:(CGPoint)point
+{
+    NSInteger intermediateResultY = point.y / cellSize;
+    NSInteger newOriginY = (intermediateResultY * cellSize) + correctionValue;
+    return newOriginY;
+}
+
+//  Заведомо не верный вариант имплементации, дублирование кода, но я не смог додуматься сделать правильнее
 
 #pragma mark - Return to the old position
 

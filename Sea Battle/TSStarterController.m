@@ -71,13 +71,20 @@ BOOL positionButtonStart = NO;
     CGPoint point = _currentView.frame.origin;
     _generationPoint = [[TSGeneratedPoint alloc] init];
     _generationPoint.delegate = self;
-    [_generationPoint receivingPoint:point view:_currentView tag:_currentView.tag];
+    [_generationPoint receivingPoint:point view:_currentView tag:_currentView.tag ships:self.collectionShip];
 }
 
 #pragma mark - TSGeneratedPointDelegate
 
 - (void)pointTransmission:(CGPoint)point
 {
+    for (UIView *ship in self.collectionShip) {
+        if (CGRectContainsRect(ship.frame, _currentView.frame)) {
+            CGRect frame = CGRectMake(point.x + 22, point.y,
+                                     _currentView.frame.size.width, _currentView.frame.size.height);
+            _currentView.frame = frame;
+        }
+    }
     CGRect frame = CGRectMake(point.x, point.y, _currentView.frame.size.width, _currentView.frame.size.height);
     _currentView.frame = frame;
 }
@@ -129,15 +136,6 @@ BOOL positionButtonStart = NO;
     positionButtonStart = YES;
 }
 
-//- (void)verificationCountShip
-//{
-//    if (_collectionShip) {
-//        <#statements#>
-//    }
-//}
-
-//?????????????????????????????
-
 #pragma mark - Save and load position ships
 
 - (void)savePositionShips
@@ -161,7 +159,6 @@ BOOL positionButtonStart = NO;
         [self.view addSubview:currentShipView];
     }
 }
-
 
 - (void)dealloc {
     [_collectionShip release];

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Tsvigun Alexandr. All rights reserved.
 //
 
-//   Класс создания всплывающих окон и предупреждений
+//   Класс создания информационного баннера при старте приложения
 
 #import <UIKit/UIKit.h>
 

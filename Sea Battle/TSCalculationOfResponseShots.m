@@ -28,31 +28,48 @@ NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculat
 
 @implementation TSCalculationOfResponseShots
 
-- (void)shotRequest:(NSArray *)collectionShips
+- (void)shotRequest:(NSArray *)collectionShips shots:(NSArray *)shots
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     _overallPoint = [self randomPoint];
     _rect = [self generationOfRectangleBasedOnRandomPoint];
-    for (UIView *ship in collectionShips) {
-        if (CGRectContainsPoint(ship.frame, _overallPoint)) {
-            [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
+    if ([[self inspectionOfTheAffectedAreaEnemy:shots point:_overallPoint] isEqualToString:@"NO"]) {
+        NSLog(@"Противник НЕТ");
+        [self.delegate transitionProgress];
+    } else {
+        for (UIView *ship in collectionShips) {
+            if (CGRectContainsPoint(ship.frame, _overallPoint)) {
+                [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
+                [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
+                                                  object:@"Стрелка красная"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.delegate transitionProgress];
+                });
+                counter = NO;
+            }
+        }
+        if (counter == YES) {
+            [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self grayBackgroundColor]];
             [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
-                                              object:@"Стрелка красная"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.delegate transitionProgress];
-            });
-            counter = NO;
-            resolution = NO;
+                                              object:@"Стрелка зеленая"];
+            resolution = YES;
+        } else {
+            counter = YES;
         }
     }
-    if (counter == YES) {
-        [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self grayBackgroundColor]];
-        [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
-                                          object:@"Стрелка зеленая"];
-    } else {
-        counter = YES;
-        resolution = YES;
+}
+
+#pragma mark - Inspection of the affected area enemy
+
+- (NSString *)inspectionOfTheAffectedAreaEnemy:(NSArray *)shots point:(CGPoint)point
+{
+    NSString *searchTheAffectedArea = nil;
+    for (UIView *view in shots) {
+        if (CGRectContainsPoint(view.frame, point)) {
+            searchTheAffectedArea = @"NO";
+        }
     }
+    return searchTheAffectedArea;
 }
 
 #pragma mark - Background Color View
