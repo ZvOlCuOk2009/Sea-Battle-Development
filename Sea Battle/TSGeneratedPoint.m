@@ -24,7 +24,6 @@ static NSInteger lengthShipFourDecks = 88;
 
 @property (retain, nonatomic) UIView *theShip;
 
-
 @end
 
 @implementation TSGeneratedPoint
@@ -34,14 +33,27 @@ static NSInteger lengthShipFourDecks = 88;
 - (void)correctPlacementShip:(CGPoint)point view:(UIView *)currentView tag:(NSInteger)tag ships:(NSArray *)ships
 {
     if (point.x <= 242 && point.x >= 22 && point.y <= 296 && point.y >= 79) {
-        
         CGPoint newPoint = CGPointMake([self newOriginX:point], [self newOriginY:point]);
         if ((currentView.frame.origin.x + currentView.frame.size.width) < 264) {
             if ([self shipIntersectsWithAnotherShip:ships selectedView:currentView]) {
-                NSLog(@"ПЕРЕСЕЧЕНИЕ!!!");
-                [currentView hitTest:point withEvent:nil];
-                CGPoint correctionPoint = CGPointMake(((newPoint.x + self.theShip.frame.size.width) + 22), newPoint.y);
-                [self.delegate pointTransmission:correctionPoint];
+                //NSLog(@"ПЕРЕСЕЧЕНИЕ!!!");
+                //NSLog(@"Max = %1.1f, Mid = %1.1f Min = %1.1f", x, r, m);
+                
+                CGFloat separationWidth = self.theShip.frame.size.width / 2;
+                CGFloat cor = (currentView.frame.origin.x - separationWidth) - 12;
+                NSLog(@"cor = %1.1f", cor);
+                if (cor < separationWidth) {
+                    NSLog(@"ВЛЕВО!!!");
+                    
+                    CGFloat xValue = self.theShip.frame.origin.x;
+                    CGFloat correctX = ((self.theShip.frame.size.width - lengthShipTwoDecks + 15) - xValue) + 22;
+                    CGPoint correctionPoint = CGPointMake(correctX, [self correctionY]);
+                    [self.delegate pointTransmission:correctionPoint];
+                } else {
+                    NSLog(@"ВПРАВО!!!");
+                    CGPoint correctionPoint = CGPointMake([self correctionX], [self correctionY]);
+                    [self.delegate pointTransmission:correctionPoint];
+                }
             } else {
                 NSLog(@"НЕТУ ПЕРЕСЕЧЕНИЯ!!!");
                 [self.delegate pointTransmission:newPoint];
@@ -66,6 +78,22 @@ static NSInteger lengthShipFourDecks = 88;
     return NO;
 }
 
+#pragma mark - Correction placement fleet
+
+- (CGFloat)correctionX
+{
+    CGFloat xValue = self.theShip.frame.origin.x;
+    CGFloat correctX = ((self.theShip.frame.size.width + lengthShipTwoDecks) + xValue) - cellSize;
+    return correctX;
+}
+
+- (CGFloat)correctionY
+{
+    CGFloat yValue = self.theShip.frame.origin.y;
+    CGFloat correctY = ((self.theShip.frame.size.height + lengthShipTwoDecks) + yValue) - cellSize;
+    return correctY;
+}
+
 - (NSInteger)newOriginX:(CGPoint)point
 {
     NSInteger intermediateResultX = point.x / cellSize;
@@ -82,7 +110,7 @@ static NSInteger lengthShipFourDecks = 88;
 
 //  Заведомо не верный вариант имплементации, дублирование кода, но я не смог додуматься сделать правильнее
 
-#pragma mark - Return to the old position
+#pragma mark - Return ship to the old position
 
 - (CGRect)returnOldPosition:(NSInteger)tag
 {
