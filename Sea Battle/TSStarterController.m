@@ -71,7 +71,7 @@ BOOL positionButtonStart = NO;
     CGPoint point = _currentView.frame.origin;
     _generationPoint = [[TSGeneratedPoint alloc] init];
     _generationPoint.delegate = self;
-    [_generationPoint receivingPoint:point view:_currentView tag:_currentView.tag ships:self.collectionShip];
+    [_generationPoint correctPlacementShip:point view:_currentView tag:_currentView.tag ships:self.collectionShip];
 }
 
 #pragma mark - TSGeneratedPointDelegate
@@ -159,6 +159,8 @@ BOOL positionButtonStart = NO;
         [self.view addSubview:currentShipView];
     }
 }
+
+#pragma mark - Destruction of objects
 
 - (void)dealloc {
     [_collectionShip release];

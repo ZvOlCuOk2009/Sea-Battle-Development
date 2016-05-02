@@ -158,7 +158,6 @@ static NSInteger sideBotton = 50;
 {
     for (UIView *ship in ships) {
         ship.backgroundColor = [UIColor greenColor];
-        //NSLog(@"Point %ld - x = %1.1f, y = %1.1f", (long)counter++, ship.frame.origin.x, ship.frame.origin.y);
         [self.view addSubview:ship];
     }
 }

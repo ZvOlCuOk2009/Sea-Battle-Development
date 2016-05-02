@@ -38,6 +38,8 @@ static NSString *soundOff = @"multimedia-2";
     }
 }
 
+#pragma mark - Destruction of objects
+
 - (void)dealloc {
     [_offSoundButton release];
     [super dealloc];

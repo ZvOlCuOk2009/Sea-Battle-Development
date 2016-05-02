@@ -24,6 +24,8 @@ static NSInteger counter = 1;
 
 @implementation TSHeadbandController
 
+#pragma mark - Start screen
+
 -  (void)viewWillAppear:(BOOL)animated
 {
     if (counter == 1) {
@@ -61,6 +63,8 @@ static NSInteger counter = 1;
     });
 }
 
+#pragma mark - Info banner
+
 - (void)nextAction
 {
     [UIView animateWithDuration:1.0
@@ -82,6 +86,8 @@ static NSInteger counter = 1;
     [self presentViewController:controller animated:NO completion:nil];
     [_loadingIndicatorView removeFromSuperview];
 }
+
+#pragma mark - Destruction of objects
 
 - (void)dealloc {
     [_gameCompButton release];
