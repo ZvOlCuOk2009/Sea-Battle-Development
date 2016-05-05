@@ -74,6 +74,8 @@ static NSInteger counter = 1;
     [self startScene];
 }
 
+#pragma mark - Actions
+
 - (IBAction)startAction:(id)sender
 {
     TSStarterController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSStarterController"];

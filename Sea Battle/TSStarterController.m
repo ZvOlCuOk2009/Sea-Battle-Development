@@ -9,9 +9,12 @@
 #import "TSStarterController.h"
 #import "TSGameController.h"
 #import "TSGeneratedPoint.h"
+#import "TSCalculationOfResponseShots.h"
+#import "TSAlerts.h"
 
 static NSString *backgroundSheet = @"sheet";
 static NSString *kKeyPositionSips = @"positionSips";
+static NSString *warning = @"Расставьте пожалуйста все корабли на поле...";
 static BOOL positon = NO;
 static BOOL loginID = YES;
 BOOL positionButtonStart = NO;
@@ -21,6 +24,7 @@ BOOL positionButtonStart = NO;
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionShip;
 @property (retain, nonatomic) UIView *currentView;
 @property (retain, nonatomic) UIView *hitView;
+@property (retain, nonatomic) UIView *alertView;
 @property (retain, nonatomic) TSGeneratedPoint *generationPoint;
 
 @end
@@ -36,12 +40,12 @@ BOOL positionButtonStart = NO;
     tapGesture.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGesture];
     [tapGesture release];
-    [self loadPositionShips];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadPositionShips];
     if (loginID == YES) {
         loginID = NO;
         [self loadPositionShips];
@@ -118,22 +122,36 @@ BOOL positionButtonStart = NO;
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromLeft;
     [self.view.window.layer addAnimation:transition forKey:nil];
-    [self dismissViewControllerAnimated:NO completion:nil]; 
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
+
+//  код дублировал что бы сохранить анимацию перехода екрана как с навигейшн контроллером
 
 - (IBAction)nextAction:(id)sender
 {
-    TSGameController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSGameController"];
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.4;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromRight;
-    [self.view.window.layer addAnimation:transition forKey:nil];
-    [self presentViewController:controller animated:NO completion:nil];
-    controller.collectionShip = self.collectionShip;
-    [self savePositionShips];
-    positionButtonStart = YES;
+    [self placeTheShips];
+}
+
+- (void)placeTheShips
+{
+//    UIView *ship = [self.collectionShip objectAtIndex:0];
+//    for (UIView *ship in self.collectionShip) {
+        if (_currentView.frame.origin.x > 300) {
+            _alertView = [TSAlerts sharedAlert:self.view text:warning];
+        } else {
+            TSGameController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSGameController"];
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.4;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionPush;
+            transition.subtype = kCATransitionFromRight;
+            [self.view.window.layer addAnimation:transition forKey:nil];
+            [self presentViewController:controller animated:NO completion:nil];
+            controller.collectionShip = self.collectionShip;
+            positionButtonStart = YES;
+            resolution = YES;
+        //}
+    }
 }
 
 #pragma mark - Save and load position ships
@@ -165,6 +183,7 @@ BOOL positionButtonStart = NO;
 - (void)dealloc {
     [_collectionShip release];
     [_hitView release];
+    [_alertView release];
     _currentView = nil;
     [super dealloc];
 }

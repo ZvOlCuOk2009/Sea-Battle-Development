@@ -16,8 +16,9 @@ static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;
 static CGFloat correctionValueY = 12;
 static BOOL resultIdentifier = YES;
+static NSInteger counter = 0;
 
-NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalculationServiceColorArrowDidChangeNotification";
+NSString *const TSServiceColorArrowDidChangeNotification = @"TSServiceColorArrowDidChangeNotification";
 
 @interface TSCalculationService ()
 
@@ -45,11 +46,16 @@ NSString *const TSCalculationServiceColorArrowDidChangeNotification = @"TSCalcul
                     if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
                         [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
                         resultIdentifier = NO;
+                        ++counter;
+                        if (counter == 3) {
+                            [self.delegate alertVictory];
+                            counter = 0;
+                        }
                     }
                 }
                 if (resultIdentifier == YES) {
                     [self.delegate calculationResponseView:_rect color:[self grayBackgroundColor]];
-                    [notificationCenter postNotificationName:TSCalculationServiceColorArrowDidChangeNotification
+                    [notificationCenter postNotificationName:TSServiceColorArrowDidChangeNotification
                                                       object:@"Стрелка красная!!!"];
                     resolution = NO;
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

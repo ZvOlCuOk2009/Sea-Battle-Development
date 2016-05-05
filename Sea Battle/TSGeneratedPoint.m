@@ -35,27 +35,23 @@ static NSInteger lengthShipFourDecks = 88;
     if (point.x <= 242 && point.x >= 22 && point.y <= 296 && point.y >= 79) {
         CGPoint newPoint = CGPointMake([self newOriginX:point], [self newOriginY:point]);
         if ((currentView.frame.origin.x + currentView.frame.size.width) < 264) {
-            if ([self shipIntersectsWithAnotherShip:ships selectedView:currentView]) {
+            if ([self shipIntersectsWithAnotherShip:ships selectedShip:currentView]) {
                 //NSLog(@"ПЕРЕСЕЧЕНИЕ!!!");
-                //NSLog(@"Max = %1.1f, Mid = %1.1f Min = %1.1f", x, r, m);
-                
                 CGFloat separationWidth = self.theShip.frame.size.width / 2;
-                CGFloat cor = (currentView.frame.origin.x - separationWidth) - 12;
-                NSLog(@"cor = %1.1f", cor);
-                if (cor < separationWidth) {
+                CGFloat correctWidth = (currentView.frame.origin.x - separationWidth) - 12;
+                
+                NSLog(@"cor = %1.1f", separationWidth);
+                if (correctWidth < separationWidth) {
                     NSLog(@"ВЛЕВО!!!");
-                    
-                    CGFloat xValue = self.theShip.frame.origin.x;
-                    CGFloat correctX = ((self.theShip.frame.size.width - lengthShipTwoDecks + 15) - xValue) + 22;
-                    CGPoint correctionPoint = CGPointMake(correctX, [self correctionY]);
+                    CGPoint correctionPoint = CGPointMake([self correctionXleft:currentView], [self correctionY]);
                     [self.delegate pointTransmission:correctionPoint];
                 } else {
                     NSLog(@"ВПРАВО!!!");
-                    CGPoint correctionPoint = CGPointMake([self correctionX], [self correctionY]);
+                    CGPoint correctionPoint = CGPointMake([self correctionXright], [self correctionY]);
                     [self.delegate pointTransmission:correctionPoint];
                 }
             } else {
-                NSLog(@"НЕТУ ПЕРЕСЕЧЕНИЯ!!!");
+                //NSLog(@"НЕТУ ПЕРЕСЕЧЕНИЯ!!!");
                 [self.delegate pointTransmission:newPoint];
             }
         } else {
@@ -66,7 +62,7 @@ static NSInteger lengthShipFourDecks = 88;
     }
 }
 
-- (BOOL)shipIntersectsWithAnotherShip:(NSArray *)ships selectedView:(UIView *)selectedShip
+- (BOOL)shipIntersectsWithAnotherShip:(NSArray *)ships selectedShip:(UIView *)selectedShip
 {
     NSArray *subViewsInView = ships;
     for(UIView *theShip in subViewsInView) {
@@ -80,10 +76,16 @@ static NSInteger lengthShipFourDecks = 88;
 
 #pragma mark - Correction placement fleet
 
-- (CGFloat)correctionX
+- (CGFloat)correctionXright
 {
     CGFloat xValue = self.theShip.frame.origin.x;
     CGFloat correctX = ((self.theShip.frame.size.width + lengthShipTwoDecks) + xValue) - cellSize;
+    return correctX;
+}
+
+- (CGFloat)correctionXleft:(UIView *)currentView
+{
+    CGFloat correctX = currentView.frame.origin.x - 27;
     return correctX;
 }
 

@@ -21,8 +21,11 @@ static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
 static NSString *buttonImgNo = @"button no";
 static NSInteger sideBotton = 50;
+static NSString *victory = @"Вы победили!!!\n Играть еще?";
+static NSString *defeat = @"Вы проиграли!!!\n Играть еще?";
+static NSString *alert = @"Закончить игру?";
 
-@interface TSGameController () <TSCalculationServiceDelegate, TSCalculationOfResponseShotsDelegate, TSAutomaticLocationDelegate>
+@interface TSGameController () <TSCalculationServiceDelegate,TSCalculationOfResponseShotsDelegate,TSAutomaticLocationDelegate>
 
 @property (retain, nonatomic) IBOutletCollection(UIView) NSArray *collectionEnemyShip;
 @property (retain, nonatomic) UIView *hitView;
@@ -55,12 +58,12 @@ static NSInteger sideBotton = 50;
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
                            selector:@selector(getNotificationTSGameController:)
-                               name:TSCalculatResponseColorArrowDidChangeNotification
+                               name:TSResponseColorArrowDidChangeNotification
                              object:nil];
     
     [notificationCenter addObserver:self
                            selector:@selector(getNotificationTSCalculationService:)
-                               name:TSCalculationServiceColorArrowDidChangeNotification
+                               name:TSServiceColorArrowDidChangeNotification
                              object:nil];
 }
 
@@ -91,24 +94,36 @@ static NSInteger sideBotton = 50;
     [self noteShot:rect color:color];
 }
 
+#pragma mark - TSAutomaticLocationDelegate
+
+- (void)translationLocationFleet:(NSArray *)ships
+{
+    for (UIView *ship in ships) {
+        ship.backgroundColor = [UIColor greenColor];
+        [self.view addSubview:ship];
+    }
+}
+
 #pragma mark - After firing indication
 
 - (void)noteShot:(CGRect)rect color:(UIColor *)color
 {
     UIView *shot = [TSShotsIndication viewNoteShot:rect color:color parentVIew:self.view view:_hitView];
-    [self.shots addObject:shot];
+    [_shots addObject:shot];
 }
 
 #pragma mark - Enemy shot
 
 - (void)transitionProgress
 {
-    _responseShots = [[TSCalculationOfResponseShots alloc] init];
-    _responseShots.delegate = self;
-    [_responseShots shotRequest:self.collectionShip shots:self.shots];
-    
-    if (soundButton == YES) {
-        [[TSSoundManager sharedManager] shotSound];
+    if (positionButtonStart == YES) {
+        _responseShots = [[TSCalculationOfResponseShots alloc] init];
+        _responseShots.delegate = self;
+        [_responseShots shotRequest:self.collectionShip shots:self.shots];
+        
+        if (soundButton == YES) {
+            [[TSSoundManager sharedManager] shotSound];
+        }
     }
 }
 
@@ -128,18 +143,27 @@ static NSInteger sideBotton = 50;
      _arrowIndication.image = [UIImage imageNamed:@"arrowRed"];
 }
 
-#pragma mark - Actions and alert
+#pragma mark - Alerts
 
 - (IBAction)backAtion:(id)sender
 {
-    _alertView = [TSAlerts createdAlertGameOver:self.view];
-    UIButton *buttonYes = [self buttonSelected:buttonImgYes x:40 y:50];
-    UIButton *buttonNo = [self buttonSelected:buttonImgNo x:110 y:50];
-    [buttonYes addTarget:self action:@selector(hangleButtonYes) forControlEvents:UIControlEventTouchUpInside];
-    [buttonNo addTarget:self action:@selector(hangleButtonNo) forControlEvents:UIControlEventTouchUpInside];
-    [_alertView addSubview:buttonYes];
-    [_alertView addSubview:buttonNo];
+    _alertView = [TSAlerts sharedAlert:self.view text:alert];
+    [self viewButtonsOnTheAddition:_alertView coordinateXValue:50];
 }
+
+- (void)alertVictory
+{
+    _alertView = [TSAlerts sharedAlert:self.view text:victory];
+    [self viewButtonsOnTheAddition:_alertView coordinateXValue:65];
+}
+
+- (void)alertDefeat
+{
+    _alertView = [TSAlerts sharedAlert:self.view text:defeat];
+    [self viewButtonsOnTheAddition:_alertView coordinateXValue:65];
+}
+
+#pragma mark - Actions
 
 - (IBAction)settinsAction:(id)sender {
     
@@ -154,15 +178,18 @@ static NSInteger sideBotton = 50;
     [autiomatic requestCollectionShips:self.collectionEnemyShip];
 }
 
-- (void)translationLocationFleet:(NSArray *)ships
+- (void)viewButtonsOnTheAddition:(UIView *)parentView coordinateXValue:(NSInteger)coordinateXValue
 {
-    for (UIView *ship in ships) {
-        ship.backgroundColor = [UIColor greenColor];
-        [self.view addSubview:ship];
-    }
+    UIButton *buttonYes = [self buttonSelected:buttonImgYes x:40 y:coordinateXValue];
+    UIButton *buttonNo = [self buttonSelected:buttonImgNo x:110 y:coordinateXValue];
+    [buttonYes addTarget:self action:@selector(hangleButtonYes) forControlEvents:UIControlEventTouchUpInside];
+    [buttonNo addTarget:self action:@selector(hangleButtonNo) forControlEvents:UIControlEventTouchUpInside];
+    [parentView addSubview:buttonYes];
+    [parentView addSubview:buttonNo];
+    positionButtonStart = NO;
 }
 
-#pragma mark - Button Alert Game Over
+#pragma mark - Button Alert
 
 - (UIButton *)buttonSelected:(NSString *)question  x:(CGFloat)x y:(CGFloat)y
 {
@@ -171,6 +198,8 @@ static NSInteger sideBotton = 50;
     [_button setImage:image forState:UIControlStateNormal];
     return _button;
 }
+
+#pragma mark - Selectors
 
 - (void)hangleButtonYes
 {
@@ -182,7 +211,6 @@ static NSInteger sideBotton = 50;
     [UIView animateWithDuration:0.5
                      animations:^{
                          _alertView.frame = CGRectMake(184, 520, 200, 120);
-                         _alertView.alpha = 0;
                      }];
 }
 
@@ -204,6 +232,7 @@ static NSInteger sideBotton = 50;
     [_button release];
     [_arrowIndication release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _shots = nil;
     [super dealloc];
 }
 

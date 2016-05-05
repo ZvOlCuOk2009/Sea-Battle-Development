@@ -13,11 +13,12 @@ static CGFloat correctionValueX = 22;
 static CGFloat correctionValueY = 12;
 static NSInteger indentationOnX = 21;
 static NSInteger indentationOnY = 79;
+static NSInteger counter = 0;
 static int fieldSide = 219;
-static BOOL counter = YES;
+static BOOL count = YES;
 BOOL resolution = YES;
 
-NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculatResponseColorArrowDidChangeNotification";
+NSString *const TSResponseColorArrowDidChangeNotification = @"TSResponseColorArrowDidChangeNotification";
 
 @interface TSCalculationOfResponseShots ()
 
@@ -40,21 +41,26 @@ NSString *const TSCalculatResponseColorArrowDidChangeNotification = @"TSCalculat
         for (UIView *ship in collectionShips) {
             if (CGRectContainsPoint(ship.frame, _overallPoint)) {
                 [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
-                [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
+                ++counter;
+                if (counter == 3) {
+                    [self.delegate alertDefeat];
+                    counter = 0;
+                }
+                [notificationCenter postNotificationName:TSResponseColorArrowDidChangeNotification
                                                   object:@"Стрелка красная"];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.delegate transitionProgress];
                 });
-                counter = NO;
+                count = NO;
             }
         }
-        if (counter == YES) {
+        if (count == YES) {
             [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self grayBackgroundColor]];
-            [notificationCenter postNotificationName:TSCalculatResponseColorArrowDidChangeNotification
+            [notificationCenter postNotificationName:TSResponseColorArrowDidChangeNotification
                                               object:@"Стрелка зеленая"];
             resolution = YES;
         } else {
-            counter = YES;
+            count = YES;
         }
     }
 }

@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-extern NSString *const TSCalculationServiceColorArrowDidChangeNotification;
+extern NSString *const TSServiceColorArrowDidChangeNotification; 
 
 @protocol TSCalculationServiceDelegate
 
@@ -22,6 +22,7 @@ extern NSString *const TSCalculationServiceColorArrowDidChangeNotification;
 @optional
 
 - (void)transitionProgress;
+- (void)alertVictory;
 
 @end
 
