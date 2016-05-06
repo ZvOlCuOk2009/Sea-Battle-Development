@@ -53,6 +53,11 @@ static NSString *alert = @"Закончить игру?";
         UIView * currentShipView = [self.collectionShip objectAtIndex:i];
         [self.view addSubview:currentShipView];
     }
+    
+    TSAutomaticLocationTheFleet *autiomatic = [[[TSAutomaticLocationTheFleet alloc] init] autorelease];
+    autiomatic.delegate = self;
+    [autiomatic requestCollectionShips:self.collectionEnemyShip];
+    
     _arrowIndication.image = [UIImage imageNamed:@"arrowGreen"];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -99,7 +104,7 @@ static NSString *alert = @"Закончить игру?";
 - (void)translationLocationFleet:(NSArray *)ships
 {
     for (UIView *ship in ships) {
-        ship.backgroundColor = [UIColor greenColor];
+        //ship.backgroundColor = [UIColor greenColor];
         [self.view addSubview:ship];
     }
 }
@@ -173,9 +178,7 @@ static NSString *alert = @"Закончить игру?";
 
 - (IBAction)avtoAction:(id)sender {
     
-    TSAutomaticLocationTheFleet *autiomatic = [[TSAutomaticLocationTheFleet alloc] init];
-    autiomatic.delegate = self;
-    [autiomatic requestCollectionShips:self.collectionEnemyShip];
+    
 }
 
 - (void)viewButtonsOnTheAddition:(UIView *)parentView coordinateXValue:(NSInteger)coordinateXValue

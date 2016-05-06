@@ -39,15 +39,15 @@ NSString *const TSServiceColorArrowDidChangeNotification = @"TSServiceColorArrow
                            (long)[self calculationValuePositionY:transmittedPoint], sideRect, sideRect);
         if (resolution == YES) {
             if ([[self inspectionOfTheAffectedArea:shots point:transmittedPoint] isEqualToString:@"NO"]) {
-                NSLog(@"НЕТ");
+                //NSLog(@"НЕТ");
             } else {
-                NSLog(@"ДА");
+                //NSLog(@"ДА");
                 for (UIView *ship in collectionShips) {
                     if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
                         [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
                         resultIdentifier = NO;
                         ++counter;
-                        if (counter == 3) {
+                        if (counter == 20) {
                             [self.delegate alertVictory];
                             counter = 0;
                         }

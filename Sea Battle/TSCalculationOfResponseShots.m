@@ -35,14 +35,14 @@ NSString *const TSResponseColorArrowDidChangeNotification = @"TSResponseColorArr
     _overallPoint = [self randomPoint];
     _rect = [self generationOfRectangleBasedOnRandomPoint];
     if ([[self inspectionOfTheAffectedAreaEnemy:shots point:_overallPoint] isEqualToString:@"NO"]) {
-        NSLog(@"Противник НЕТ");
+        //NSLog(@"Противник НЕТ");
         [self.delegate transitionProgress];
     } else {
         for (UIView *ship in collectionShips) {
             if (CGRectContainsPoint(ship.frame, _overallPoint)) {
                 [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
                 ++counter;
-                if (counter == 3) {
+                if (counter == 20) {
                     [self.delegate alertDefeat];
                     counter = 0;
                 }

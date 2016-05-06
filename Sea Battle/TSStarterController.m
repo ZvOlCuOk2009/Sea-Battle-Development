@@ -15,9 +15,13 @@
 static NSString *backgroundSheet = @"sheet";
 static NSString *kKeyPositionSips = @"positionSips";
 static NSString *warning = @"Расставьте пожалуйста все корабли на поле...";
+static NSString *buttonImgOk = @"button Ok";
 static BOOL positon = NO;
 static BOOL loginID = YES;
+static NSInteger called = 1;
+static NSInteger sideBotton = 50;
 BOOL positionButtonStart = NO;
+
 
 @interface TSStarterController () <TSGeneratedPointDelegate>
 
@@ -25,6 +29,8 @@ BOOL positionButtonStart = NO;
 @property (retain, nonatomic) UIView *currentView;
 @property (retain, nonatomic) UIView *hitView;
 @property (retain, nonatomic) UIView *alertView;
+@property (retain, nonatomic) UIButton *button;
+@property (retain, nonatomic) NSMutableArray *strings;
 @property (retain, nonatomic) TSGeneratedPoint *generationPoint;
 
 @end
@@ -114,6 +120,82 @@ BOOL positionButtonStart = NO;
 
 #pragma mark - Actions
 
+- (IBAction)nextAction:(id)sender
+{
+    for (UIView *ship in self.collectionShip) {
+        NSString *identifier = nil;
+        if (ship.frame.origin.x > 300) {
+                identifier = @"ship";
+            } else {
+                identifier = @"next";
+            }
+        _strings = [[NSMutableArray alloc] init];
+        [_strings addObject:identifier];
+    }
+    [self determineThePositionOfShips];
+}
+
+- (void)determineThePositionOfShips
+{
+    for (NSString *stringIdent in _strings) {
+        
+            if ([stringIdent isEqualToString:@"next"]) {
+                [self transitionToTheNextController];
+                called++;
+        } else {
+            if (called == 1) {
+                _alertView = [TSAlerts sharedAlert:self.view text:warning];
+                [self viewButtonsOnTheAddition:_alertView];
+                called++;
+            }
+        }
+    }
+    called = 1;
+    _strings = nil;
+}
+
+- (void)viewButtonsOnTheAddition:(UIView *)parentView
+{
+    UIButton *buttonNo = [self buttonSelected:buttonImgOk];
+    [buttonNo addTarget:self action:@selector(hangleButtonOk) forControlEvents:UIControlEventTouchUpInside];
+    [parentView addSubview:buttonNo];
+    positionButtonStart = NO;
+}
+
+- (UIButton *)buttonSelected:(NSString *)answer
+{
+    _button = [[UIButton alloc] initWithFrame:CGRectMake(sideBotton + 25, sideBotton + 20, sideBotton, sideBotton)];
+    _button.backgroundColor = [UIColor blueColor];
+    UIImage *image = [UIImage imageNamed:answer];
+    [_button setImage:image forState:UIControlStateNormal];
+    return _button;
+}
+
+- (void)hangleButtonOk
+{
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         _alertView.frame = CGRectMake(184, 520, 200, 120);
+                     }];
+}
+
+- (void)transitionToTheNextController
+{
+    TSGameController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSGameController"];
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromRight;
+    [self.view.window.layer addAnimation:transition forKey:nil];
+    [self presentViewController:controller animated:NO completion:nil];
+    controller.collectionShip = self.collectionShip;
+    positionButtonStart = YES;
+    resolution = YES;
+}
+
+//  код дублировал что бы сохранить анимацию перехода екрана как с навигейшн контроллером
+
 - (IBAction)backAction:(id)sender
 {
     CATransition *transition = [CATransition animation];
@@ -123,35 +205,6 @@ BOOL positionButtonStart = NO;
     transition.subtype = kCATransitionFromLeft;
     [self.view.window.layer addAnimation:transition forKey:nil];
     [self dismissViewControllerAnimated:NO completion:nil];
-}
-
-//  код дублировал что бы сохранить анимацию перехода екрана как с навигейшн контроллером
-
-- (IBAction)nextAction:(id)sender
-{
-    [self placeTheShips];
-}
-
-- (void)placeTheShips
-{
-//    UIView *ship = [self.collectionShip objectAtIndex:0];
-//    for (UIView *ship in self.collectionShip) {
-        if (_currentView.frame.origin.x > 300) {
-            _alertView = [TSAlerts sharedAlert:self.view text:warning];
-        } else {
-            TSGameController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSGameController"];
-            CATransition *transition = [CATransition animation];
-            transition.duration = 0.4;
-            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-            transition.type = kCATransitionPush;
-            transition.subtype = kCATransitionFromRight;
-            [self.view.window.layer addAnimation:transition forKey:nil];
-            [self presentViewController:controller animated:NO completion:nil];
-            controller.collectionShip = self.collectionShip;
-            positionButtonStart = YES;
-            resolution = YES;
-        //}
-    }
 }
 
 #pragma mark - Save and load position ships

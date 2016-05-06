@@ -42,11 +42,11 @@ static NSInteger lengthShipFourDecks = 88;
                 
                 NSLog(@"cor = %1.1f", separationWidth);
                 if (correctWidth < separationWidth) {
-                    NSLog(@"ВЛЕВО!!!");
+                    //NSLog(@"ВЛЕВО!!!");
                     CGPoint correctionPoint = CGPointMake([self correctionXleft:currentView], [self correctionY]);
                     [self.delegate pointTransmission:correctionPoint];
                 } else {
-                    NSLog(@"ВПРАВО!!!");
+                    //NSLog(@"ВПРАВО!!!");
                     CGPoint correctionPoint = CGPointMake([self correctionXright], [self correctionY]);
                     [self.delegate pointTransmission:correctionPoint];
                 }
