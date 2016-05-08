@@ -7,7 +7,6 @@
 //
 
 #import "TSFloatingRepresentation.h"
-#import "TSButton.h"
 
 static NSString *font = @"Savoye LET";
 static CGFloat redColor = 113.0 / 255.0;

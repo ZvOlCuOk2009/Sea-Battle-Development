@@ -237,6 +237,7 @@ BOOL positionButtonStart = NO;
     [_collectionShip release];
     [_hitView release];
     [_alertView release];
+    [_button release];
     _currentView = nil;
     [super dealloc];
 }

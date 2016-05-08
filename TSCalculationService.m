@@ -16,7 +16,7 @@ static CGFloat sideRect = 22;
 static CGFloat correctionValueX = 23;
 static CGFloat correctionValueY = 12;
 static BOOL resultIdentifier = YES;
-static NSInteger counter = 0;
+NSInteger counterSrv = 0;
 
 NSString *const TSServiceColorArrowDidChangeNotification = @"TSServiceColorArrowDidChangeNotification";
 
@@ -46,10 +46,10 @@ NSString *const TSServiceColorArrowDidChangeNotification = @"TSServiceColorArrow
                     if (CGRectContainsPoint(ship.frame, transmittedPoint)) {
                         [self.delegate calculationResponseView:_rect color:[self redBackgroundColor]];
                         resultIdentifier = NO;
-                        ++counter;
-                        if (counter == 20) {
+                        ++counterSrv;
+                        if (counterSrv == 20) {
                             [self.delegate alertVictory];
-                            counter = 0;
+                            counterSrv = 0;
                         }
                     }
                 }

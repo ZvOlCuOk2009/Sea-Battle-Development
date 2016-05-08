@@ -40,7 +40,7 @@ static NSInteger lengthShipFourDecks = 88;
                 CGFloat separationWidth = self.theShip.frame.size.width / 2;
                 CGFloat correctWidth = (currentView.frame.origin.x - separationWidth) - 12;
                 
-                NSLog(@"cor = %1.1f", separationWidth);
+                //NSLog(@"correct = %1.1f", separationWidth);
                 if (correctWidth < separationWidth) {
                     //NSLog(@"ВЛЕВО!!!");
                     CGPoint correctionPoint = CGPointMake([self correctionXleft:currentView], [self correctionY]);

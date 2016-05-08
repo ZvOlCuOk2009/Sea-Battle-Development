@@ -31,7 +31,7 @@
                                     <color key="titleColor" red="0.4431372549" green="0.16862745100000001" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="nextAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="76W-tl-019"/>
+                                    <action selector="bluetoothAction:" destination="TgN-WZ-d6n" eventType="touchUpInside" id="7ZQ-80-iSc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.0" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HX2-lU-Nuk">
@@ -62,8 +62,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="gameBluetoothButton" destination="SHK-iH-R2A" id="bCQ-ME-Zby"/>
-                        <outlet property="gameCompButton" destination="HX2-lU-Nuk" id="9IZ-Dy-tAS"/>
+                        <outlet property="gameBluetoothButton" destination="SHK-iH-R2A" id="kgl-Fe-VLd"/>
+                        <outlet property="gameCompButton" destination="HX2-lU-Nuk" id="5QC-UX-1NS"/>
                         <outlet property="loadingIndicatorView" destination="K4n-DQ-awy" id="aRC-F4-grx"/>
                     </connections>
                 </viewController>

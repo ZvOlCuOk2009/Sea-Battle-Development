@@ -15,7 +15,7 @@ static CGFloat blueColor = 249.0 / 255.0;
 
 @implementation TSAlerts
 
-#pragma mark - Created alert Winning
+#pragma mark - Created shared alert
 
 + (UIView *)sharedAlert:(UIView *)parentView text:(NSString *)text;
 {

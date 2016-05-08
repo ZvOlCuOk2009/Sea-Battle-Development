@@ -13,6 +13,7 @@
 
 extern NSString *const TSResponseColorArrowDidChangeNotification;
 extern BOOL resolution;
+extern NSInteger counterRsp;
 
 @protocol TSCalculationOfResponseShotsDelegate
 

@@ -13,7 +13,7 @@ static CGFloat correctionValueX = 22;
 static CGFloat correctionValueY = 12;
 static NSInteger indentationOnX = 21;
 static NSInteger indentationOnY = 79;
-static NSInteger counter = 0;
+NSInteger counterRsp = 0;
 static int fieldSide = 219;
 static BOOL count = YES;
 BOOL resolution = YES;
@@ -41,10 +41,10 @@ NSString *const TSResponseColorArrowDidChangeNotification = @"TSResponseColorArr
         for (UIView *ship in collectionShips) {
             if (CGRectContainsPoint(ship.frame, _overallPoint)) {
                 [self.delegate calculationEnemyShotView:_rect point:_overallPoint color:[self redBackgroundColor]];
-                ++counter;
-                if (counter == 20) {
+                ++counterRsp;
+                if (counterRsp == 20) {
                     [self.delegate alertDefeat];
-                    counter = 0;
+                    counterRsp = 0;
                 }
                 [notificationCenter postNotificationName:TSResponseColorArrowDidChangeNotification
                                                   object:@"Стрелка красная"];

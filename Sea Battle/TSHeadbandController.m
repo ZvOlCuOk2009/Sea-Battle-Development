@@ -9,15 +9,20 @@
 #import "TSHeadbandController.h"
 #import "TSStarterController.h"
 #import "TSFloatingRepresentation.h"
-#import "TSButton.h"
+#import "TSAlerts.h"
 
 static NSInteger counter = 1;
+static NSString *textMessage = @"Ищет уcтройства IPad или IPhone...";
+static NSString *buttonCenc = @"buttonCencel";
+static NSInteger sideBotton = 30;
 
 @interface TSHeadbandController ()
 
 @property (retain, nonatomic) IBOutlet UIButton *gameCompButton;
 @property (retain, nonatomic) IBOutlet UIButton *gameBluetoothButton;
 @property (retain, nonatomic) IBOutlet UIView *loadingIndicatorView;
+@property (retain, nonatomic) UIView *alertView;
+@property (retain, nonatomic) UIButton *button;
 @property (retain, nonatomic) TSFloatingRepresentation *infoBanner;
 
 @end
@@ -89,6 +94,44 @@ static NSInteger counter = 1;
     [_loadingIndicatorView removeFromSuperview];
 }
 
+- (IBAction)bluetoothAction:(id)sender
+{
+    _alertView = [TSAlerts sharedAlert:self.view text:textMessage];
+    [self viewButtonsOnTheAddition:_alertView];
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]
+                                             initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityView.center = CGPointMake(_alertView.frame.size.width / 2.0, _alertView.frame.size.height / 2.0 + 20);
+    [activityView startAnimating];
+    [_alertView addSubview:activityView];
+    [activityView release];
+}
+
+- (void)viewButtonsOnTheAddition:(UIView *)parentView
+{
+    UIButton *buttonCencel = [self buttonSelected:buttonCenc];
+    buttonCencel.backgroundColor = [UIColor blueColor];
+    [buttonCencel addTarget:self action:@selector(hangleButtonCencel) forControlEvents:UIControlEventTouchUpInside];
+    [parentView addSubview:buttonCencel];
+    positionButtonStart = NO;
+}
+
+- (UIButton *)buttonSelected:(NSString *)answer
+{
+    _button = [[UIButton alloc] initWithFrame:CGRectMake(sideBotton + 60, sideBotton + 80, sideBotton, sideBotton)];
+    _button.backgroundColor = [UIColor blueColor];
+    UIImage *image = [UIImage imageNamed:answer];
+    [_button setImage:image forState:UIControlStateNormal];
+    return _button;
+}
+
+- (void)hangleButtonCencel
+{
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         _alertView.frame = CGRectMake(184, 520, 200, 120);
+                     }];
+}
+
 #pragma mark - Destruction of objects
 
 - (void)dealloc {
@@ -96,6 +139,8 @@ static NSInteger counter = 1;
     [_gameBluetoothButton release];
     [_loadingIndicatorView release];
     [_infoBanner release];
+    [_gameCompButton release];
+    [_button release];
     [super dealloc];
 }
 @end

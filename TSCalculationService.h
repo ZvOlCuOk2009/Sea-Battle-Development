@@ -11,7 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-extern NSString *const TSServiceColorArrowDidChangeNotification; 
+extern NSString *const TSServiceColorArrowDidChangeNotification;
+extern NSInteger counterSrv;
 
 @protocol TSCalculationServiceDelegate
 

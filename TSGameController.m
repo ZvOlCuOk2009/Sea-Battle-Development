@@ -104,7 +104,6 @@ static NSString *alert = @"Закончить игру?";
 - (void)translationLocationFleet:(NSArray *)ships
 {
     for (UIView *ship in ships) {
-        //ship.backgroundColor = [UIColor greenColor];
         [self.view addSubview:ship];
     }
 }
@@ -207,6 +206,8 @@ static NSString *alert = @"Закончить игру?";
 - (void)hangleButtonYes
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    counterSrv = 0;
+    counterRsp = 0;
 }
 
 - (void)hangleButtonNo
