@@ -19,6 +19,8 @@
 		FD878CF31CC26BC200AF3C99 /* TSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD878CF21CC26BC200AF3C99 /* TSGameController.m */; };
 		FD878CF71CC26DB400AF3C99 /* TSCalculationService.m in Sources */ = {isa = PBXBuildFile; fileRef = FD878CF61CC26DB400AF3C99 /* TSCalculationService.m */; };
 		FD9087C31CCC366700B64A49 /* TSSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9087C21CCC366700B64A49 /* TSSettingsController.m */; };
+		FD9EE41C1CE20301005EA188 /* TSCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9EE41B1CE20301005EA188 /* TSCentralManager.m */; };
+		FD9EE41F1CE20366005EA188 /* TSPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9EE41E1CE20366005EA188 /* TSPeripheral.m */; };
 		FD9F231D1CC8BC2100EE0243 /* TSSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9F231C1CC8BC2100EE0243 /* TSSoundManager.m */; };
 		FD9F23201CC8BD3700EE0243 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9F231F1CC8BD3700EE0243 /* AVFoundation.framework */; };
 		FD9F23221CC8C2AF00EE0243 /* shoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD9F23211CC8C2AF00EE0243 /* shoot.mp3 */; };
@@ -73,6 +75,10 @@
 		FD878CF61CC26DB400AF3C99 /* TSCalculationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSCalculationService.m; path = ../TSCalculationService.m; sourceTree = "<group>"; };
 		FD9087C11CCC366700B64A49 /* TSSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSettingsController.h; sourceTree = "<group>"; };
 		FD9087C21CCC366700B64A49 /* TSSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsController.m; sourceTree = "<group>"; };
+		FD9EE41A1CE20301005EA188 /* TSCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCentralManager.h; sourceTree = "<group>"; };
+		FD9EE41B1CE20301005EA188 /* TSCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCentralManager.m; sourceTree = "<group>"; };
+		FD9EE41D1CE20366005EA188 /* TSPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPeripheral.h; sourceTree = "<group>"; };
+		FD9EE41E1CE20366005EA188 /* TSPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPeripheral.m; sourceTree = "<group>"; };
 		FD9F231B1CC8BC2100EE0243 /* TSSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSoundManager.h; sourceTree = "<group>"; };
 		FD9F231C1CC8BC2100EE0243 /* TSSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSoundManager.m; sourceTree = "<group>"; };
 		FD9F231F1CC8BD3700EE0243 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -154,6 +160,7 @@
 			children = (
 				FD878CC11CC26B8700AF3C99 /* AppDelegate.h */,
 				FD878CC21CC26B8700AF3C99 /* AppDelegate.m */,
+				FD9EE4191CE20193005EA188 /* Bluetooth */,
 				FD9F232A1CC95EA900EE0243 /* Alerts */,
 				FD9F231E1CC8BC3900EE0243 /* Sound Manager */,
 				FD878CF81CC26DC500AF3C99 /* Model */,
@@ -222,6 +229,17 @@
 				FDBFFCA51CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FD9EE4191CE20193005EA188 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				FD9EE41A1CE20301005EA188 /* TSCentralManager.h */,
+				FD9EE41B1CE20301005EA188 /* TSCentralManager.m */,
+				FD9EE41D1CE20366005EA188 /* TSPeripheral.h */,
+				FD9EE41E1CE20366005EA188 /* TSPeripheral.m */,
+			);
+			name = Bluetooth;
 			sourceTree = "<group>";
 		};
 		FD9F231E1CC8BC3900EE0243 /* Sound Manager */ = {
@@ -401,6 +419,8 @@
 				FD878CC31CC26B8700AF3C99 /* AppDelegate.m in Sources */,
 				FDBFFCA61CCD5BDD00F13A37 /* TSAutomaticLocationTheFleet.m in Sources */,
 				FD878CC01CC26B8700AF3C99 /* main.m in Sources */,
+				FD9EE41C1CE20301005EA188 /* TSCentralManager.m in Sources */,
+				FD9EE41F1CE20366005EA188 /* TSPeripheral.m in Sources */,
 				FD5854D21CC839850051CD58 /* TSGeneratedPoint.m in Sources */,
 				FD5296951CD09D7F00790BF6 /* TSFloatingRepresentation.m in Sources */,
 				FD9F23331CC9673E00EE0243 /* TSAlerts.m in Sources */,

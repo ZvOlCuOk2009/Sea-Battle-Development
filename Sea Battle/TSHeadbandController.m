@@ -12,9 +12,9 @@
 #import "TSAlerts.h"
 
 static NSInteger counter = 1;
-static NSString *textMessage = @"Ищет уcтройства IPad или IPhone...";
-static NSString *buttonCenc = @"buttonCencel";
-static NSInteger sideBotton = 30;
+static NSString *textMessage = @"Поиск уcтройств IPad или IPhone...";
+static NSString *buttonCenc = @"Cancel";
+static NSInteger sideBotton = 25;
 
 @interface TSHeadbandController ()
 
@@ -117,7 +117,7 @@ static NSInteger sideBotton = 30;
 
 - (UIButton *)buttonSelected:(NSString *)answer
 {
-    _button = [[UIButton alloc] initWithFrame:CGRectMake(sideBotton + 60, sideBotton + 80, sideBotton, sideBotton)];
+    _button = [[UIButton alloc] initWithFrame:CGRectMake(sideBotton + 48, sideBotton + 65, sideBotton + 30, sideBotton)];
     _button.backgroundColor = [UIColor blueColor];
     UIImage *image = [UIImage imageNamed:answer];
     [_button setImage:image forState:UIControlStateNormal];
