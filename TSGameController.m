@@ -16,6 +16,7 @@
 #import "TSSettingsController.h"
 #import "TSAutomaticLocationTheFleet.h"
 #import "TSShotsIndication.h"
+#import "TSHeadbandController.h"
 
 static NSString *backgroundSheet = @"battle";
 static NSString *buttonImgYes = @"button yes";
@@ -206,6 +207,7 @@ static NSString *alert = @"Закончить игру?";
 - (void)hangleButtonYes
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
     counterSrv = 0;
     counterRsp = 0;
 }
@@ -237,6 +239,8 @@ static NSString *alert = @"Закончить игру?";
     [_arrowIndication release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _shots = nil;
+    _servise = nil;
+    _responseShots = nil;
     [super dealloc];
 }
 

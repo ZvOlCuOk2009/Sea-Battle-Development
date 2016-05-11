@@ -11,10 +11,10 @@
 #import "TSFloatingRepresentation.h"
 #import "TSAlerts.h"
 
-static NSInteger counter = 1;
 static NSString *textMessage = @"Поиск уcтройств IPad или IPhone...";
 static NSString *buttonCenc = @"Cancel";
 static NSInteger sideBotton = 25;
+static NSInteger firstInput = 1;
 
 @interface TSHeadbandController ()
 
@@ -31,26 +31,36 @@ static NSInteger sideBotton = 25;
 
 #pragma mark - Start screen
 
--  (void)viewWillAppear:(BOOL)animated
+
+- (void)viewWillAppear:(BOOL)animated
 {
-    if (counter == 1) {
-        _infoBanner = [[TSFloatingRepresentation alloc] initWithInfoBanner:self.view];
-        CGRect frame = CGRectMake(330, 200, 75, 30);
-        UIButton *nextButton = [[[UIButton alloc] initWithFrame:frame] autorelease];
-        [nextButton setImage:[UIImage imageNamed:@"next"] forState:UIControlStateNormal];
-        [nextButton addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
-        [_infoBanner addSubview:nextButton];
-        
-        [UIView animateWithDuration:1.0
-                         animations:^{
-                             _infoBanner.frame = CGRectMake(self.view.bounds.size.width - 497, self.view.bounds.size.height - 280, self.view.bounds.size.width - 142, self.view.bounds.size.height - 80);
-                             [self.view addSubview:_infoBanner];
-                         }];
-        counter++;
+    if (firstInput == 1) {
+        [self callInfoBanner];
+        [self firstInputLoad];
+        firstInput++;
+    } else {
+        [self startSceneAnimation];
     }
 }
 
-- (void)startScene
+#pragma mark - Info banner
+
+- (void)callInfoBanner
+{
+    _infoBanner = [[TSFloatingRepresentation alloc] initWithInfoBanner:self.view];
+    CGRect frame = CGRectMake(330, 200, 75, 30);
+    UIButton *nextButton = [[[UIButton alloc] initWithFrame:frame] autorelease];
+    [nextButton setImage:[UIImage imageNamed:@"next"] forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
+    [_infoBanner addSubview:nextButton];
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         _infoBanner.frame = CGRectMake(self.view.bounds.size.width - 497, self.view.bounds.size.height - 280, self.view.bounds.size.width - 142, self.view.bounds.size.height - 80);
+                         [self.view addSubview:_infoBanner];
+                     }];
+}
+
+- (void)startSceneAnimation
 {
     [UIView animateWithDuration:3.0
                      animations:^{
@@ -68,7 +78,10 @@ static NSInteger sideBotton = 25;
     });
 }
 
-#pragma mark - Info banner
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self firstInputSave];
+}
 
 - (void)nextAction
 {
@@ -76,7 +89,7 @@ static NSInteger sideBotton = 25;
                      animations:^{
                          _infoBanner.frame = CGRectMake(self.view.bounds.size.width - 497, self.view.bounds.size.height + 280, self.view.bounds.size.width - 142, self.view.bounds.size.height - 80);
                      }];
-    [self startScene];
+    [self startSceneAnimation];
 }
 
 #pragma mark - Actions
@@ -130,6 +143,21 @@ static NSInteger sideBotton = 25;
                      animations:^{
                          _alertView.frame = CGRectMake(184, 520, 200, 120);
                      }];
+}
+
+#pragma mark - Display information banner when you first log
+
+- (void)firstInputSave
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:firstInput forKey:@"firstInput"];
+    [userDefaults synchronize];
+}
+
+- (void)firstInputLoad
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    firstInput = [userDefaults integerForKey:@"firstInput"];
 }
 
 #pragma mark - Destruction of objects
